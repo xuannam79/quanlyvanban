@@ -1,0 +1,134 @@
+.TieuDe
+{
+	width: 90%;
+	height:8%;
+	padding: 14px 20px;
+	text-align: center;
+	margin: 0px 5%;
+}
+.TieuDe .banner img
+{
+	width: 100%;
+}
+.NoiDung
+{
+	width: 	100%;
+	height: 500px;
+	margin: 3.5% 0%;
+}
+.lbl_ThemCongVan{
+	float: left;
+}
+#congvan
+{
+	width: 	20%;
+	height: 100%;
+	float : left;
+}
+#TuyChon
+{
+	width: 	75%;
+	height: 500px; 
+	float : right;
+	border: solid #cccccc 1px;
+	overflow: auto;
+}
+.TinNhanDen
+{
+	border-collapse: separate;
+	width: 100%;
+	height:49%;      
+	background-color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 2px 2px 1px #ffffff;
+}
+.TinNhanDen tr td span 
+{
+	display: block;
+}
+.TinNhanDen tr td a 
+{
+	text-decoration: none;
+	color : black;
+	
+}
+.TinNhanDen tr td a:hover
+{
+	text-decoration: none;
+	color : orange;
+	font-size: 20px;
+	
+}
+.TinNhanDi 
+{
+	width: 100%;
+	height:49%;
+	display: table;
+	border-collapse: separate;
+}
+.TinNhanDi tr td span 
+{
+	display: block;
+}
+.TinNhanDi tr td a 
+{
+	text-decoration: none;
+	color : black;
+	
+}
+.TinNhanDi tr td a:hover
+{
+	text-decoration: none;
+	color : orange;
+	font-size: 20px;
+	
+}
+.CaNhan
+{
+	width: 100%;
+	height:100px;
+	margin: 5px 0px;
+}
+
+table , td 
+{
+	border: 1px solid #efefef;
+}
+button.btn-primary1 
+{       
+	height:25%;   
+	width:  25%;
+	margin: 15px 5px;
+	background-color: #ffffff;
+	border-color: #ffffff;
+	border-radius: 25px;
+}
+button.btn-primary1:hover
+{
+	margin: 15px 5px;
+	background-color: #d2fdce;
+	border-color: #d2fdce;
+}
+button.btn-primary2 
+{
+	width:  13%;
+	background-color: #ffffff;
+	border-color: #ffffff;
+	border-radius: 25px;
+	margin: 30px 30px;
+}
+button.btn-primary2:hover 
+{
+	margin: 0px 0px;
+	width:  20%;
+	background-color: #ffffff;
+	border-color: #ffffff;
+}
+#TuyChon img {
+	width: 30%;
+	border-radius: 90%;
+}
+.CaNhan img {
+	width: 30%;
+	border-radius: 90%;
+}

@@ -1,0 +1,244 @@
+@CHARSET "ISO-8859-1";
+/* home main */
+
+.detailcontent
+{
+		width: 	90%;
+		height: 115%;
+		margin: 50px 5%;
+		border: 1px solid #ffffff;
+}
+#ChiMuc
+{
+		display: block;	
+		width: 	20%;
+		height: 100%;
+		margin: 5px 5px;
+		float : left;
+		border: 1px solid black;
+		background-color: #f9f9f9;
+}
+#ChiMuc ul li .sub-menu
+{
+			display: none;	
+}
+#ChiMuc ul li:hover .sub-menu
+{
+		background-color: #c0c0c0;
+		display: block;	
+}
+.tabcontent {
+		width: 	99%;
+    	display: none;
+}
+#Main
+{
+		width: 	71%;
+		height: 100%;
+		margin: 5px 5px;	
+		float : right;
+		border: 1px solid black;
+		background-color: #f9f9f9;
+		
+}
+.TrangChu
+	{
+	    border-collapse: separate;
+		width: 100%;
+		height:auto;;      /* set to 100% */
+   		background-color: #ffffff;
+  		border-radius: 5px;
+  		border: solid #cccccc 1px;
+   		box-shadow: 2px 2px 1px #ffffff;
+	}
+
+table , td 
+{
+	    border: 1px solid #efefef;
+}	
+
+
+
+
+
+/* thời khóa biểu*/
+@CHARSET "ISO-8859-1";
+.schedule
+{
+	width: 	850px;
+	height: 715px;
+}
+.TKBday
+{
+	width: 	850px;
+	height: 71.5px;	
+	border: 1px solid black;
+}
+.TKBcangay
+{
+	text-align: center;
+	height: 71.5px;
+	width: 	85px;
+	border: 1px solid black;
+	float:left;
+}
+.TKBThuNgay
+{
+	width: 	761px;
+	height: 71.5px;
+	float:right;
+}
+.TKBThuNgay th
+{
+	text-align: center;
+	width: 	89.74px;
+	border: 1px solid black;
+}
+.TKBTimeAndContent
+{
+	width: 	850px;
+	height: 641px;	
+	border: 1px solid black;
+}
+.TKBtime
+{
+	width: 	85px;
+	height: 641px;
+	border: 1px solid black;
+	float:left;
+}
+.TKBthoigian
+{
+	width: 	85px;
+	height: 	641px;
+}
+.TKBthoigian td
+{
+	text-align: center;
+  	border-radius: 5px;
+  	border: solid #cccccc 1px;
+
+}
+.TKBcontent
+{
+	width: 	761px;
+	height: 641px;
+	border: 1px solid black;
+	float:right;
+	/*background-image :url("Img/Untitled1.png");*/
+}
+.break-word { word-wrap: break-word;}
+
+
+
+/*văn bản đến*/
+@CHARSET "ISO-8859-1";
+.NoiDung
+{
+		text-align: right;
+		width: 	100%;
+		height: 570px;
+		margin: 10px 4px;
+}
+.VanBanDen
+{
+	    border-collapse: separate;
+		width: 100%;
+		height:100%;;      /* set to 100% */
+   		background-color: #ffffff;
+  		border-radius: 5px;
+   		box-shadow: 2px 2px 1px #ffffff;
+}
+table , td 
+{
+		text-align: left;
+	    border: 1px solid #400040;
+}
+table , th 
+{
+		text-align: right;
+	    border: 1px solid #400040;
+}
+#vbden
+{
+		float : center;
+}
+#taovb
+{
+		float :right;
+}
+.ChonTrang
+{
+		text-align: right;		
+}
+.TimKiem
+{
+		text-align: right;		
+}
+#ComboboxTimKiem
+{
+		width: 20%;	
+}
+#KeyWord
+{
+	    width: 20%;	
+		height: 15px;
+}
+#Find
+{
+		width: 7%;	
+		background-color: #4CAF50; /* Green */
+    	border: none;
+    	color: white;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 12px;	
+}
+
+
+
+/*new vb css*/
+@CHARSET "ISO-8859-1";
+.newvb
+{
+    margin: 8px 8px;
+	text-transform: uppercase;
+}
+#gui
+{
+	width: 47%;
+	margin: 30px 8px;
+	float : left;
+}
+#dong
+{
+	width: 47%;
+	margin: 30px 8px;
+    background-color: #ff8040;
+	float : right;
+}
+#newvbcontent
+{
+	width: 95%;
+	height :90 ;
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: #d6d6d6;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 49%;
+}
