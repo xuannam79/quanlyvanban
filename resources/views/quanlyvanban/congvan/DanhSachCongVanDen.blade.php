@@ -15,7 +15,7 @@
       {{Form::select('DSDonVi',$DSDonVi,null,['id'=>'DSDonVi','style'=>'display: none;'])}}
       <input type="submit" name="TimKiemVanBanDen" value="Tìm">
       {!!Form::close()!!}
-       <a href="{{ route('quanlyvanban.congvan.danhsachcongvanden',['page'=>1]) }}">Hủy tìm</a> | <a href=""> Tìm kiếm năng cao</a>
+       <a href="{{ route('quanlyvanban.congvan.danhsachcongvanden',['page'=>1]) }}">Hủy tìm</a> | <a href="{{route('quanlyvanban.congvan.danhsachcongvanden.timkiemnangcao')}}"> Tìm kiếm năng cao</a>
    </div>
 </div>
 <script type="text/javascript">

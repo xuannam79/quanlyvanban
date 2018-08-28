@@ -13,7 +13,7 @@ class BieuMauRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,20 @@ class BieuMauRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'TenBieuMau' => 'required',
+            'NgayBanHanh' => 'required',
+            'NgayGui' => 'required',
+            'TrichYeuNoiDung' => 'required',
+            'FileDinhKem' => 'required',
         ];
+    }
+    public function messages(){
+        return [
+            'TenBieuMau.required' => 'Trường này không được để trống',
+            'NgayBanHanh.required' => 'Trường này không được để trống',
+            'NgayGui.required' => 'Trường này không được để trống',
+            'TrichYeuNoiDung.required' => 'Trường này không được để trống',
+            'FileDinhKem.required' => 'Hãy chọn file đính kèm',
+        ];   
     }
 }

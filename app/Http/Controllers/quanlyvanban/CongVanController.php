@@ -72,7 +72,9 @@ class CongVanController extends Controller
         //var_dump($KeyWord);
         return view('quanlyvanban.congvan.DanhSachCongVanDen')->with(array('page'=>$page,'sqlQuery'=>$sqlQuery,'tuKhoa'=>$tuKhoa,'loaiTimKiem'=>$loaiTimKiem,'DSDonVi'=>$dsDonVi));
     }
-
+    public function danhSachCongVanDen_TimKiemnangCao(){
+        return view('quanlyvanban.congvan.DanhSachCongVanDen_TimKiemNangCao');
+    }
     function phanTrang($page,$sqlQuery,$tuKhoa,$loaiTimKiem,$loaiDS=1){
         //ds cong van gui cho nhan su hop voi cong van gui cho don vi
             $data = \DB::select($sqlQuery);

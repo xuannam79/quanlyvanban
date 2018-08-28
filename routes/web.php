@@ -20,7 +20,7 @@ Route::namespace('Auth')->group(function(){
 		'as'=>'quanlyvanban.auth.kiemtra'
 	]);
 });
-
+// Quản lý văn bản
 Route::namespace('quanlyvanban')->group(function(){
 	Route::get('/trang-chu',[
 		'uses'=>'CongVanController@trangChu',
@@ -60,7 +60,13 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'CongVanController@postPhanHoiCongVan',
 		'as'=>'quanlyvanban.congvan.phanhoicongvan'
 	]);
-	Route::get('/danh-sach-bieu-mau-{page}',[
+	//Tim kiem nang cao
+	Route::get('/tim-kiem-nang-cao',[
+		'uses' => 'CongVanController@danhSachCongVanDen_TimKiemnangCao',
+		'as' => 'quanlyvanban.congvan.danhsachcongvanden.timkiemnangcao'
+	]);
+	//Các route cho biểu mẫu
+	Route::get('/danh-sach-bieu-mau',[
 		'uses'=>'BieuMauController@danhSachBieuMau',
 		'as'=>'quanlyvanban.bieumau.danhsachbieumau'
 	]);
@@ -72,33 +78,50 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'BieuMauController@postTaoMoiBieuMau',
 		'as'=>'quanlyvanban.bieumau.taomoibieumau'
 	]);
+
+});
+//Admin
+
+Route::namespace('Admin')->group(function(){
+	Route::get('/admin-page', [
+	    'uses' =>'IndexController@index',
+	    'as' => 'admin.index'
+	]);
+	Route::get('/admin/quanlynhansu', [
+	    'uses' =>'NhanSuController@index',
+	    'as' => 'admin.nhansu.index'
+	]);
+	Route::post('/admin/quanlynhansu', [
+	    'uses' =>'NhanSuController@postsearch',
+	    'as' => 'admin.nhansu.index'
+	]);
+	Route::get('/admin/quanlynhansu/them-nhan-su', [
+	    'uses' =>'NhanSuController@add',
+	    'as' => 'admin.nhansu.add'
+	]);
+	Route::post('/admin/quanlynhansu/them-nhan-su', [
+	    'uses' =>'NhanSuController@postadd',
+	    'as' => 'admin.nhansu.add'
+	]);
+	Route::get('/admin/quanlynhansu/xoa-nhan-su/{id}', [
+	    'uses' =>'NhanSuController@delete',
+	    'as' => 'admin.nhansu.delete'
+	]);
+	Route::get('/admin/quanlynhansu/sua-nhan-su/{id}', [
+	    'uses' =>'NhanSuController@edit',
+	    'as' => 'admin.nhansu.edit'
+	]);
+	Route::post('/admin/quanlynhansu/sua-nhan-su/{id}', [
+	    'uses' =>'NhanSuController@postedit',
+	    'as' => 'admin.nhansu.edit'
+	]);
 });
 //Đăng xuất
 Route::get('/dang-xuat',function(){
 	Session::flush();
 	return redirect(url('/'));
 });
-//Biểu mẫu
 
-
-Route::get('/FrmChinhSuaCongVan/{soCongVan}','CongVanController@frmChinhSuaCongVan');
-Route::post('/ChinhSuaCongVan','CongVanController@chinhSuaCongVan');
-
-
-
-//danh sách công văn
-Route::get('/TimKiemNangcao',function(){return view('TrangChu');});
-//phản hồi văn bản
-//Biểu mẫu
-Route::get('/DanhSachBieuMau/{page}','BieuMauController@danhSachBieuMau');
-Route::get('/TaoMoiBieuMau','BieuMauController@getTaoMoiBieuMau');
-Route::post('/TaoMoiBieuMau','BieuMauController@postTaoMoiBieuMau');
-
-// Nhan su controller
-Route::get('/DanhSachNhanSu', 'NhanSuController@danhSachNhanSu');
-Route::get('/FormThemNhanSu','NhanSuController@formThemNhanSu');
-Route::post('/ThemNhanSu','NhanSuController@themNhanSu');
-Route::get('/ChiTietNhanSu/{maNhanSu}','NhanSuController@chiTietNhanSu');
 //test
 Route::get('/test',function(){
 	return view('quanlyvanban.test.Success');

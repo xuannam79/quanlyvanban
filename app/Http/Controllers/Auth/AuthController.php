@@ -19,8 +19,7 @@ class AuthController extends Controller
 
             }
             else {
-                Session::put('username', 'fail');
-                return view('Fail');
+                return 'đăng nhập thất bại <br> <a href = "'.route('quanlyvanban.auth.index').'">quay lai</a>';
             }
     }
     public function showForm(){

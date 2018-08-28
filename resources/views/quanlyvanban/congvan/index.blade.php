@@ -11,7 +11,7 @@
 			float: right;
 			font-size: 16px;">
 			Xin chào, <b> {{Session::get('username')}}</b>
-			&nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Đăng xuất</a> 
+			&nbsp; <a href="{{url('/dang-xuat')}}" class="btn btn-danger square-btn-adjust">Đăng xuất</a> 
 		</div>
 		</div>
 		<div id="content" class="NoiDung">
@@ -85,7 +85,7 @@
     				
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=9'" class='btn btn-primary1'> <img src='img/sodiachi.png' alt='Avatar' class='avatar'><br><a>Số địa chỉ</a></button>
     				
-    				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=6'" class='btn btn-primary1'> <img src='img/bieumau.jpg' alt='Avatar' class='avatar'><br><a>Biểu mẫu</a></button>
+    				<button type='button' onclick="window.location.href='{{route('quanlyvanban.bieumau.danhsachbieumau',['page'=>1])}}'" class='btn btn-primary1'> <img src='img/bieumau.jpg' alt='Avatar' class='avatar'><br><a>Biểu mẫu</a></button>
 				</div>
     		</div>
 		</div>
