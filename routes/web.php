@@ -26,15 +26,19 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'CongVanController@trangChu',
 		'as'=>'quanlyvanban.congvan.index'
 	]);
-	Route::get('/danh-sach-cong-van-den-{page}',[
+	Route::get('/danh-sach-cong-van-den',[
 		'uses'=>'CongVanController@danhSachCongVanDen',
 		'as'=>'quanlyvanban.congvan.danhsachcongvanden'
 	]);
-	Route::post('/danh-sach-cong-van-den-{page}',[
+	Route::post('/danh-sach-cong-van-den',[
 		'uses'=>'CongVanController@danhSachCongVanDen',
 		'as'=>'quanlyvanban.congvan.danhsachcongvanden'
 	]);
-	Route::get('/danh-sach-cong-van-di-{page}',[
+	Route::get('/danh-sach-cong-van-di',[
+		'uses'=>'CongVanController@danhSachCongvanDi',
+		'as'=>'quanlyvanban.congvan.danhsachcongvandi'
+	]);
+	Route::post('/danh-sach-cong-van-di',[
 		'uses'=>'CongVanController@danhSachCongvanDi',
 		'as'=>'quanlyvanban.congvan.danhsachcongvandi'
 	]);

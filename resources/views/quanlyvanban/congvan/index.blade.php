@@ -70,11 +70,12 @@
     		</div>
     		<div id="TuyChon">
     			<div class="btn-group">
-    				<button type='button' onclick="window.location.href='{{route('quanlyvanban.congvan.danhsachcongvanden',['page'=>1])}}'" class='btn btn-primary1'> <img src='img/vanbanden.jpg' alt='Avatar' class='avatar'><br><a>Văn bản đến</a></button>
-    				<button type='button' onclick="window.location.href='{{route('quanlyvanban.congvan.danhsachcongvandi',['page'=>1])}}'" class='btn btn-primary1'> <img src='img/vanbandi.png' alt='Avatar' class='avatar'><br><a>Văn bản đi</a></button>
+    				<button type='button' onclick="window.location.href='{{route('quanlyvanban.congvan.danhsachcongvanden')}}'" class='btn btn-primary1'> <img src='img/vanbanden.jpg' alt='Avatar' class='avatar'><br><a>Văn bản đến</a></button>
+    				@if(Session::get('quyenTruyCap')==1)
+    				<button type='button' onclick="window.location.href='{{route('quanlyvanban.congvan.danhsachcongvandi')}}'" class='btn btn-primary1'> <img src='img/vanbandi.png' alt='Avatar' class='avatar'><br><a>Văn bản đi</a></button>
     				
     				<button type='button' onclick="window.location.href='{{route('quanlyvanban.congvan.taomoicongvan')}}'" class='btn btn-primary1'> <img src='img/taomoivaluu.png' alt='Avatar' class='avatar'><br><a>Tạo mới và lưu văn bản</a></button>
-    				
+    				@endif
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=thoikhoabieu'" class='btn btn-primary1'> <img src='img/thoikhoabieu.png' alt='Avatar' class='avatar'><br><a>Thời khóa biểu</a></button>
     				
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=4'" class='btn btn-primary1'> <img src='img/lichtuantruong.jpg' alt='Avatar' class='avatar'><br><a>Lịch tuần trường</a></button>
@@ -95,7 +96,9 @@
 			    <div class="btn-group1">
 			        <button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=0" class='btn btn-primary2' > <img src='img/login.png' alt='Avatar' class='avatar'><br><a>Thông tin cá nhân</a></button>
 			    	<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=vanbanden'" class='btn btn-primary2'> <img src='img/vanbanden.jpg' alt='Avatar' class='avatar'><br><a>Văn bản đến</a></button>
+			    	@if(Session::get('quyenTruyCap')==1)
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=2'" class='btn btn-primary2'> <img src='img/vanbandi.png' alt='Avatar' class='avatar'><br><a>Văn bản đi</a></button>
+    				@endif
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=4'" class='btn btn-primary2'> <img src='img/thoikhoabieu.png' alt='Avatar' class='avatar'><br><a>Thời khóa biểu</a></button>
     				<button type='button' onclick="window.location.href='http://localhost/PHP/a/detail.php?tab=5'" class='btn btn-primary2'> <img src='img/lichtuantruong.jpg' alt='Avatar' class='avatar'><br><a>Lịch tuần trường</a></button>
 				</div>

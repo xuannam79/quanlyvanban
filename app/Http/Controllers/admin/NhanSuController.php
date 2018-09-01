@@ -4,13 +4,16 @@ namespace App\Http\Controllers\admin;
 use App\Http\Requests\NhanSuRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\model\NhanSu;
+use App\Model\NhanSu;
+use Session;
 class NhanSuController extends Controller
 {
     public function __construct(NhanSu $mNhanSu){
     	$this->mNhanSu = $mNhanSu;
     }	
     public function index(){
+        if(!Session::has('username'))
+            return redirect(url('/'));
     	$id = '';
     	$hoten='';
     	$danhsach = $this->mNhanSu->layDanhSachNhanSu();
@@ -22,6 +25,8 @@ class NhanSuController extends Controller
     	return redirect()->Route('admin.nhansu.index');
     }
     public function add(){
+        if(!Session::has('username'))
+            return redirect(url('/'));
     	return view('admin.nhansu.add');
     }
     public function postadd(NhanSuRequest $request){
@@ -43,6 +48,8 @@ class NhanSuController extends Controller
     	//$insert = $this->mNhanSu->insertItem($id,$hoten,$gioitinh,$diachi,$sodienthoai,$email);
     }
     public function edit($id){
+        if(!Session::has('username'))
+            return redirect(url('/'));
     	$danhsach = $this->mNhanSu->getItem($id);
     	return view('admin.nhansu.edit',compact('danhsach'));
     }

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BieuMauRequest;
 use Session;
-use App\BieuMau;
+use App\Model\BieuMau;
 use App\DonVi;
-use App\NhanSu;
+use App\Model\NhanSu;
 class BieuMauController extends Controller
 {
     public function __construct(BieuMau $bieuMau,NhanSU $nhanSu,DonVi $donVi){
@@ -24,11 +24,15 @@ class BieuMauController extends Controller
         return view('quanlyvanban.bieumau.DanhSachBieuMau',compact('dsBieuMau'));
     }
     public function getTaoMoiBieuMau(){
+        if(!Session::has('username'))
+            return redirect(url('/'));
     	$dsDonVi = $this->donVi->getAll();
     	$dsNhanSu = $this->nhanSu->getAll();
     	return view('quanlyvanban.bieumau.FormTaoMoiBieuMau',compact('dsDonVi','dsNhanSu'));
     }
     public function postTaoMoiBieuMau(BieuMauRequest $request){
+        if(!Session::has('username'))
+            return redirect(url('/'));
     	$maBieumau = time();
     	$tenBieuMau = $request->TenBieuMau;
     	$donViBanHanh = $request->DonViBanHanh;

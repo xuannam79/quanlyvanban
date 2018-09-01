@@ -1,6 +1,6 @@
 <?php
 
-namespace App\model;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +19,8 @@ class NhanSu extends Model
     public function getItemConditon($id,$name){
       return DB::table('nhansu')->where('MA_NHAN_SU','LIKE','%'.$id.'%')->orwhere('HO_VA_TEN','LIKE','%'.$name.'%')->paginate(3);
     }
-
-
+    public function getAll(){
+      return \DB::table('nhansu')->get();
+    }
+    
 }

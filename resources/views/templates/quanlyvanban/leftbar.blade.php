@@ -1,21 +1,24 @@
 <div class="sidenav">
             <button class="dropdown-btn">VĂN BẢN</button>
             <div class="dropdown-container">
-               <a href="{{route('quanlyvanban.congvan.danhsachcongvanden',['page'=>1])}}">Văn bản đến</a>
-               <a href="{{route('quanlyvanban.congvan.danhsachcongvandi',['page'=>1])}}">Văn bản đi</a>
+               <a href="{{route('quanlyvanban.congvan.danhsachcongvanden')}}">Văn bản đến</a>
+               @if(Session::get('quyenTruyCap')==1)
+               <a href="{{route('quanlyvanban.congvan.danhsachcongvandi')}}">Văn bản đi</a>
                <a href="{{route('quanlyvanban.congvan.taomoicongvan')}}">Tạo mới và lưu văn bản</a>
+               @endif
             </div>
             
             <button class="dropdown-btn">BIỂU MẪU </button>
             <div class="dropdown-container">
-               <a href="{{route('quanlyvanban.bieumau.danhsachbieumau',['page'=>1])}}">Biểu mẫu</a>
+               <a href="{{route('quanlyvanban.bieumau.danhsachbieumau')}}">Biểu mẫu</a>
             </div>
+            @if(Session::get('quyenTruyCap')==1)
             <button class="dropdown-btn">NHÂN SỰ </button>
             <div class="dropdown-container">
                <a href="{{url('/DanhSachNhanSu')}}">Danh sách nhân sự</a>
-               <a href="{{url('/FormThemNhanSu')}}">Thêm mới nhân sự</a>
-               <a href="{{url('/FormThemNhanSu')}}">Tiếp nhận nhân sự</a>
+               <a href="{{url('/FormThemNhanSu')}}">Ủy quyền</a>
             </div>
+            @endif
             <button class="dropdown-btn">KẾ HOẠCH  </button>
             <div class="dropdown-container">
                <a href="#">Thời khóa biểu</a>

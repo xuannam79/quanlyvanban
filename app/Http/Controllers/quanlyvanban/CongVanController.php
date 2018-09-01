@@ -5,19 +5,33 @@ namespace App\Http\Controllers\quanlyvanban;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
-
+use App\Model\CongVan;
+use App\Model\NhanSu;
+use App\Model\DonVi;
 class CongVanController extends Controller
 {
-    //---------------------------------------------------------------------------------------------------------------------------------
+    public function __construct(CongVan $congVan, NhanSu $nhanSu, DonVi $donVi){
+        $this->congVan = $congVan;
+        $this->nhanSu = $nhanSu;
+        $this->donVi = $donVi;
+    }
+    
+    function trangChu(){
+        if(!Session::has('username'))
+            return redirect(route('quanlyvanban.auth.index'));
+        return view('quanlyvanban.congvan.index');
+    }
+
     //Danh sách công văn
-    function danhSachCongvanDi(Request $request,$page){
+    function danhSachCongvanDi(Request $request){
         if(!Session::has('username'))
             return redirect()->route('quanlyvanban.auth.index');
-        $sqlQuery = "SELECT c.*,d.TEN_DON_VI FROM congvan c inner join donvi d on d.MA_DON_VI = c.DON_VI_BAN_HANH ";
-        $DonVi = \DB::table('donvi')->get()->toArray();
-        $dsDonVi = array();
-        foreach ($DonVi as $item) {
-            $dsDonVi[ $item->MA_DON_VI] = $item->TEN_DON_VI;
+        $dsCongVanDi = $this->congVan->danhSachCongVanDi();
+        $dsDonVi = $this->donVi->getAll();
+        $dsFile = array();
+        foreach($dsCongVanDi as $congVan){
+            $soCongVan = $congVan->SO_CONG_VAN;
+            $dsFile[$soCongVan] = $this->congVan->fileDinhKem($soCongVan);
         }
         $tuKhoa = '';
         $loaiTimKiem = '';
@@ -26,31 +40,22 @@ class CongVanController extends Controller
             $loaiTimKiem = $request->all()['LoaiTimKiem'];
             $tuKhoa = $request->all()['keyword'];
             if($loaiTimKiem == 1){
-                $sqlQuery = "SELECT c.SO_CONG_VAN,c.TRICH_YEU_NOI_DUNG,d.TEN_DON_VI,c.NGAY_BAN_HANH,c.NGUOI_GUI FROM congvan c inner join donvi d on d.MA_DON_VI = c.DON_VI_BAN_HANH where SO_CONG_VAN like '%{$tuKhoa}%' ";
+                $dsCongVanDi = $this->congVan->timCongVanDiTheoSoCongVan($tuKhoa);
             }
             else if($loaiTimKiem == 2){
-                $sqlQuery = "SELECT c.SO_CONG_VAN,c.TRICH_YEU_NOI_DUNG,d.TEN_DON_VI,c.NGAY_BAN_HANH,c.NGUOI_GUI FROM congvan c inner join donvi d on d.MA_DON_VI = c.DON_VI_BAN_HANH where TRICH_YEU_NOI_DUNG like '%{$tuKhoa}%' ";
-            }
-            else if($loaiTimKiem == 3){
-                $donViTimKiem = $request->all()['DSDonVi'];
-                $sqlQuery = "SELECT c.SO_CONG_VAN,c.TRICH_YEU_NOI_DUNG,d.TEN_DON_VI,c.NGAY_BAN_HANH,c.NGUOI_GUI FROM congvan c inner join donvi d on d.MA_DON_VI = c.DON_VI_BAN_HANH where DON_VI_BAN_HANH = '{$donViTimKiem}' ";
+                $dsCongVanDi = $this->congVan->timCongVanDiTheoTrichYeuNoiDung($tuKhoa);
             }
         }
-        return view('quanlyvanban.congvan.DanhSachCongvanDi')->with(array('page'=>$page,'sqlQuery'=>$sqlQuery,'tuKhoa'=>$tuKhoa,'loaiTimKiem'=>$loaiTimKiem,'DSDonVi'=>$dsDonVi));;
+        return view('quanlyvanban.congvan.DanhSachCongvanDi',compact('dsCongVanDi','dsDonVi','dsFile'));
     }
 
-    function trangChu(){
-        if(!Session::has('username'))
-            return redirect(route('quanlyvanban.auth.index'));
-        return view('quanlyvanban.congvan.index');
-    }
-
-    function danhSachCongVanDen(Request $request,$page){
-        $sqlQuery = "SELECT * FROM dscongvanden where  (MA_CVNS = '".Session::get('maNhanSu')."' or (MA_CVDV = '".Session::get('maDonVi')."' and LOAI_GUI = '".Session::get('chucVu')."'))";
-        $DonVi = \DB::table('donvi')->get()->toArray();
-        $dsDonVi = array();
-        foreach ($DonVi as $item) {
-            $dsDonVi[ $item->MA_DON_VI] = $item->TEN_DON_VI;
+    function danhSachCongVanDen(Request $request){
+        $dsDonVi = $this->donVi->getAll();
+        $dsCongVanDen = $this->congVan->danhSachCongVanDen();
+        $dsFile = array();
+        foreach($dsCongVanDen as $congVan){
+            $soCongVan = $congVan->SO_CONG_VAN;
+            $dsFile[$soCongVan] = $this->congVan->fileDinhKem($soCongVan);
         }
         $tuKhoa = '';
         $loaiTimKiem = '';
@@ -59,150 +64,33 @@ class CongVanController extends Controller
             $loaiTimKiem = $request->all()['LoaiTimKiem'];
             $tuKhoa = $request->all()['keyword'];
             if($loaiTimKiem == 1){
-                $sqlQuery = "SELECT * FROM dscongvanden where SO_CONG_VAN like '%{$tuKhoa}%' and (MA_CVNS = '".Session::get('maNhanSu')."' or (MA_CVDV = '".Session::get('maDonVi')."' and LOAI_GUI = '".Session::get('chucVu')."'))";
+                $dsCongVanDen = $this->congVan->timCongVanDenTheoSoCongVan($tuKhoa);
             }
             else if($loaiTimKiem == 2){
-                $sqlQuery = "SELECT * FROM dscongvanden where TRICH_YEU_NOI_DUNG like '%{$tuKhoa}%' and (MA_CVNS = '".Session::get('maNhanSu')."' or (MA_CVDV = '".Session::get('maDonVi')."' and LOAI_GUI = '".Session::get('chucVu')."'))";
+                $dsCongVanDen = $this->congVan->timCongVanDenTheoTrichYeuNoiDung($tuKhoa);
             }
             else if($loaiTimKiem == 3){
                 $donViTimKiem = $request->all()['DSDonVi'];
-                $sqlQuery = "SELECT * FROM dscongvanden where DON_VI_BAN_HANH = '{$donViTimKiem}' and (MA_CVNS = '".Session::get('maNhanSu')."' or (MA_CVDV = '".Session::get('maDonVi')."' and LOAI_GUI = '".Session::get('chucVu')."'))";
+                $dsCongVanDen = $this->congVan->timCongVanDenTheoDonViBanHanh($donViTimKiem);
             }
         }
         //var_dump($KeyWord);
-        return view('quanlyvanban.congvan.DanhSachCongVanDen')->with(array('page'=>$page,'sqlQuery'=>$sqlQuery,'tuKhoa'=>$tuKhoa,'loaiTimKiem'=>$loaiTimKiem,'DSDonVi'=>$dsDonVi));
+        return view('quanlyvanban.congvan.DanhSachCongVanDen',compact('dsDonVi','dsCongVanDen','dsFile'));
     }
     public function danhSachCongVanDen_TimKiemnangCao(){
         return view('quanlyvanban.congvan.DanhSachCongVanDen_TimKiemNangCao');
     }
-    function phanTrang($page,$sqlQuery,$tuKhoa,$loaiTimKiem,$loaiDS=1){
-        //ds cong van gui cho nhan su hop voi cong van gui cho don vi
-            $data = \DB::select($sqlQuery);
-            $total_records = count($data);
-            $current_page = $page;
-            $limit = 4;
-            if($total_records<$limit)
-                $limit = $total_records;
-            $total_page = ($total_records!=0)? ceil($total_records / $limit):1;
-            // Giới hạn current_page trong khoảng 1 đến total_page
-            if ($current_page > $total_page){
-                $current_page = $total_page;
-            }
-            else if ($current_page < 1){
-                 $current_page = 1;
-            }
-            // Tìm Start
-            $start = ($current_page - 1) * $limit;
-            // Lấy dữ liệu theo limit và start
-            $data1 = \DB::select($sqlQuery." limit {$start},{$limit}");
-           // $data1 = \DB::table('dscongvanden')->skip($start)->take($limit)->get()->toArray();
-            // lặp để hiển thị
-            if($total_records>0)
-            foreach ($data1 as $value) {
-                        $IdVanBan =$value->SO_CONG_VAN;
-                        $PhongBan =$value->NGUOI_GUI;
-                        $Noidungtomtat =$value->TRICH_YEU_NOI_DUNG;
-                        $ngaybanhanh = $value->NGAY_BAN_HANH;
-                        $donViBanHanh = $value->TEN_DON_VI;
-                        $capDoQuanTrong = $value->CAP_DO_QUAN_TRONG;
-                        $strCapDoQuanTrong = $capDoQuanTrong=='0'?"<i><font color='red'>Khẩn</font></i>":'';
-                        $urlPhanHoi = route('quanlyvanban.congvan.phanhoicongvan',['soCongVan'=>$IdVanBan]);
-                        if($tuKhoa != '' and $loaiTimKiem ==1){
-                            $IdVanBan=str_replace($tuKhoa,"<b>".$tuKhoa."</b>",$IdVanBan);
-                        }
-                        else if($tuKhoa != '' and $loaiTimKiem ==2){
-                            $Noidungtomtat=str_replace($tuKhoa,"<b>".$tuKhoa."</b>",$Noidungtomtat);
-                        }
-                        else if($tuKhoa != '' and $loaiTimKiem ==3){
-                            $donViBanHanh=str_replace($tuKhoa,"<b>".$tuKhoa."</b>",$donViBanHanh);
-                        }
-                        // tóm tắt nếu nọi dung quá dài
-                        if(strlen($Noidungtomtat)>50) $Noidungtomtat= substr($Noidungtomtat,0,100)."...";
-                        if($loaiDS == 1){
-                                    echo "
-                                    <p style='text-align: left;''>
-                                    Số ký hiệu văn bản: {$IdVanBan} - {$donViBanHanh} $strCapDoQuanTrong<br>
-                                    Về việc: {$Noidungtomtat}  - <i>{$ngaybanhanh}</i>.<a href='{$urlPhanHoi}' style='color: red;'>Phản hồi văn bản.</a><br>
-                                    File đính kèm: 
-                                    ";
-                                    $dsFile = \DB::table('congvan_filedinhkem')->where('SO_CONG_VAN',$IdVanBan)->get()->toArray();
-                                    foreach($dsFile as $key => $value)
-                                        echo "<a href='".url("file/{$value->FILE_DINH_KEM}")."' download>".$value->FILE_DINH_KEM.'</a> ';
-                                    echo '<hr></p>';
-                                }
-                        else{
-                            echo "
-                                <p style='text-align: left;''>
-                                Số ký hiệu văn bản: {$IdVanBan}<br>
-                                Về việc: {$Noidungtomtat}  - <i>{$ngaybanhanh}</i>.<a href='{$urlPhanHoi}' style='color: red;'>Tình trạng văn bản.</a><br>
-                                File đính kèm: 
-                                ";
-                                $dsFile = \DB::table('congvan_filedinhkem')->where('SO_CONG_VAN',$IdVanBan)->get()->toArray();
-                                    foreach($dsFile as $key => $value)
-                                        echo "<a href='".url("file/{$value->FILE_DINH_KEM}")."' download>".$value->FILE_DINH_KEM.'</a> ';
-                                    echo '<hr></p>';
-                        }
-            }
-            else echo 'Không tìm thấy văn bản nào';
-            echo "<br/>";
-            // nếu current_page > 1 và total_page > 1 mới hiển thị nút prev
-            if ($current_page > 1 && $total_page > 1){
-                //echo '<a href="/DanhSachCongVanDen/'.($current_page-1).'">Prev</a> | ';
-                if($loaiDS == 1)
-                echo '<a href='.route('quanlyvanban.congvan.danhsachcongvanden',['page'=>$current_page-1]).'>Prev</a> | ';
-                else 
-                    echo '<a href='.route('quanlyvanban.congvan.danhsachcongvandi',['page'=>$current_page-1]).'>Prev</a> | ';
-            }
-           
-            // Lặp khoảng giữa
-            for ($i = 1; $i <= $total_page; $i++){
-             // Nếu là trang hiện tại thì hiển thị thẻ span
-            // ngược lại hiển thị thẻ a
-                if ($i == $current_page){
-                 echo '<span>'.$i.'</span> | ';
-                }
-                else{
-                    if($loaiDS == 1)
-                        echo '<a href='.route('quanlyvanban.congvan.danhsachcongvanden',['page'=>$i]).'>'.$i.'</a> | ';
-                    else
-                        echo '<a href='.route('quanlyvanban.congvan.danhsachcongvandi',['page'=>$i]).'>'.$i.'</a> | ';
-                }
-            }
- 
-        // nếu current_page < $total_page và total_page > 1 mới hiển thị nút prev
-        if ($current_page < $total_page && $total_page > 1){
-            if($loaiDS == 1)
-                echo '<a href='.route('quanlyvanban.congvan.danhsachcongvanden',['page'=>$current_page+1]).'>Next</a> ';
-            else 
-                echo '<a href='.route('quanlyvanban.congvan.danhsachcongvandi',['page'=>$current_page+1]).'>Next</a> ';
-        }
-    }
+    
 
     //---------------------------------------------------------------------------------------------------------------------------------
     //Tạo mới công văn
     public function getTaoMoiCongVan(){
     	$LoaiVanBan = \DB::table('l_vanban')->get()->toArray();
-    	$DonVi = \DB::table('donvi')->get()->toArray();
-    	$NhanSu = \DB::table('nhansu')->get()->toArray();
+    	$dsDonVi = \DB::table('donvi')->get()->toArray();
+    	$dsNhanSu = \DB::table('nhansu')->get();
     	$dsLoaiVanBan = array();
-    	$dsDonVi = array();
-    	$dsNhanSu = array();
-        //khi có yêu cầu tìm kiếm người ký duyệt
-        // if(isset($request->TimNguoiKyDuyet)){
-        //     $donViTimKiem = $request->DonViTimKiem;
-        //     $nhanSuTimKiem = $request->NhanSuTimKiem;
-        //     $DonVi = \DB::table('donvi')->where('MA_DON_VI',$donViTimKiem)->get()->toArray();
-        //     $NhanSu = \DB::table('nhansu')->where('HO_VA_TEN',$nhanSuTimKiem)->get()->toArray();  
-        // }
-    	//truyền dữ liệu lấy từ database vào mảng tham số
     	foreach ($LoaiVanBan as $item) {
     		$dsLoaiVanBan[ $item->MA_L_NVANBAN] = $item->TEN_L_NVANBAN;
-    	}
-    	foreach ($DonVi as $item) {
-    		$dsDonVi[ $item->MA_DON_VI] = $item->TEN_DON_VI;
-    	}
-    	foreach ($NhanSu as $item) {   
-    		$dsNhanSu[ $item->MA_NHAN_SU] = $item->HO_VA_TEN;
     	}
     	//danh sách các mảng tham số truyền vào view
     	$data = array('dsLoaiVanBan'=>$dsLoaiVanBan,'dsDonVi'=>$dsDonVi,'dsNhanSu'=>$dsNhanSu);

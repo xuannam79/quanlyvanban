@@ -13,14 +13,22 @@ class AuthController extends Controller
             $data = \DB::table('taikhoan')->join('nhansu_thuocdonvi','taikhoan.MA_NHAN_SU','=','nhansu_thuocdonvi.MA_NHAN_SU')->join('nhansu','nhansu_thuocdonvi.MA_NHAN_SU','=','nhansu.MA_NHAN_SU')->join('donvi','donvi.MA_DON_VI','=','nhansu_thuocdonvi.MA_DON_VI')->where('TEN_DANG_NHAP',$tendangnhap)->where('MAT_KHAU',$matkhau)->get();
             if(count($data)>0){
                 foreach ($data as $value) {
-                    Session::put( array('username' => $value->TEN_DANG_NHAP,'chucVu' => $value->MA_CHUC_VU,'maNhanSu' => $value->MA_NHAN_SU,'tenNhanSu'=>$value->HO_VA_TEN,'maDonVi'=>$value->MA_DON_VI,'tenDonVi'=>$value->TEN_DON_VI));
+                    Session::put( array('username' => $value->TEN_DANG_NHAP,'chucVu' => $value->MA_CHUC_VU,'maNhanSu' => $value->MA_NHAN_SU,'tenNhanSu'=>$value->HO_VA_TEN,'maDonVi'=>$value->MA_DON_VI,'tenDonVi'=>$value->TEN_DON_VI,'quyenTruyCap'=>$value->QUYEN_TRUY_CAP));
                 }
                    return redirect()->route('quanlyvanban.congvan.index');
 
             }
             else {
-                return 'đăng nhập thất bại <br> <a href = "'.route('quanlyvanban.auth.index').'">quay lai</a>';
+                $data = \DB::table('taikhoanadmin')->where(['TEN_DANG_NHAP'=>$tendangnhap,'MAT_KHAU'=>$matkhau])->get();
+                if(count($data)>0){
+                    Session::put(['username'=>$tendangnhap]);
+                    return redirect()->route('admin.index');
+                }
+                else{
+                    return 'đăng nhập thất bại <br> <a href = "'.route('quanlyvanban.auth.index').'">quay lai</a>';
+                }
             }
+            
     }
     public function showForm(){
         return view('quanlyvanban.auth.index');

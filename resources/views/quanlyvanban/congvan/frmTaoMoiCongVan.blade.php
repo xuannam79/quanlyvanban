@@ -2,10 +2,15 @@
 
 @extends('templates.quanlyvanban.master')
 @section('NoiDung')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        <script type="text/javascript" src="{{url('js/choosen.jquery.min.js')}}"></script>
 <script type="text/javascript">
+  var data = new Object();
    $(document).ready(function(){
        $("#DonVi").hide();
        $("#Chon").prop('checked',false);
+       $(".livesearch").chosen(); 
    });
    function NS_Click(){
      $("#DonVi").hide();
@@ -21,6 +26,11 @@
    }
    
 </script>
+<style type="text/css">
+.chosen-container .chosen-container-multi .chosen-with-drop .chosen-container-active{
+  width: 300px;
+}
+</style>
 <div style="margin: 5%;">
 <h2>Gửi công văn</h2>
 <div>
@@ -63,56 +73,53 @@
    </div>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Người ký duyệt(<font color="red">*</font>) :</label>
-      {{Form::select('NguoiKyDuyet',$dsNhanSu)}}
-   </div>
+      <select class="form-control"></select>
+   </div><br>
+   <div style="float: left;">
    <label class="lbl_ThemCongVan">Nơi lưu nhận(chọn 1 trong 3) :</label>
    {{Form::radio('LoaiGui','1',true,['onchange'=>'NS_Click();','id'=>'chon'])}}<label>Cá nhân</label>
    {{Form::radio('LoaiGui','2',false,['onchange'=>'DV_Click();'])}}<label>Đơn vị</label>
    {{Form::radio('LoaiGui','3',false,['onchange'=>'TC_Click();'])}}<label>Tất cả cả các đơn vị</label>
+   </div>
 </div>
 <div id='NhanSu' style="margin-top: 1%;">
 <br>
-   <label class="lbl_ThemCongVan">Chọn các cá nhân để gửi đến</label><br>
    
-   <div class="form-inline">
-      {{Form::select('from',$dsNhanSu,null,['style'=>'width: 200px;','multiple'=>'multiple','class'=>'form-control mb-2 mr-sm-2 mb-sm-0','size'=>'9','id'=>'undo_redo'])}}
-      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-         <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
-         <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
-         <button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
-         <button type="button" id="undo_redo_leftAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
-      </div>
-      {{Form::select('GuiChoCaNhan[]',array(),null,['style'=>'width: 200px;','multiple'=>'multiple','class'=>'form-control mb-2 mr-sm-2 mb-sm-0','size'=>'9','id'=>'undo_redo_to'])}}
-   </div>
+
+    
+          <div class="form-group">
+            <label>Nhập từ khóa và chọn tên người nhận:</label>
+            <select class="form-control select2" name="GuiChoCaNhan[]" multiple="">
+              @foreach($dsNhanSu as  $value)
+                  <option value="{{$value->MA_NHAN_SU}}">{{$value->HO_VA_TEN}}</option>
+              @endforeach
+            </select>
+         </div>
+
 </div>
 <div id='DonVi' style="margin-top: 1%;">
-   <label class="lbl_ThemCongVan">Chọn các đơn vị để gửi đến</label><br>
-   <br><label class="lbl_ThemCongVan">Gửi cho:</label><br>
-   {{Form::select('GuiCho',array(1=>'Gửi cho trưởng đơn vị',2=>'Gửi cho phó đơn vị',3=>'Gửi cho tất cả nhân viên trong đơn vị'))}}
-   <div class="form-inline" style="margin-top: 2%;">
-      {{Form::select('from',$dsDonVi,null,['style'=>'width: 200px;','multiple'=>'multiple','class'=>'form-control mb-2 mr-sm-2 mb-sm-0','size'=>'9','id'=>'undo_redo1'])}}
-      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-         <button type="button" id="undo_redo1_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
-         <button type="button" id="undo_redo1_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
-         <button type="button" id="undo_redo1_leftSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
-         <button type="button" id="undo_redo1_leftAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
-      </div>
-      {{Form::select('GuiChoDonVi[]',array(),null,['style'=>'width: 200px;','multiple'=>'multiple','class'=>'form-control mb-2 mr-sm-2 mb-sm-0','size'=>'9','id'=>'undo_redo1_to'])}}
-   </div>
-   
+   <br><label>Gửi cho:</label><br>
+   <select>
+     <option>aaaaaaaaa</option>
+   </select><br>
+            <label>Nhập từ khóa và chọn các đơn vị nhận:</label>
+            <div>
+      <select class="livesearch"  name="GuiChoDonVi[]" multiple="" style="width: 100%;"> 
+              @foreach($dsDonVi as  $value)
+                  <option value="{{$value->MA_DON_VI}}">{{$value->TEN_DON_VI}}</option>
+              @endforeach
+      </select> 
+    </div>
 </div>
 <div style="margin-top: 5%;">
-       
       <button onclick="history.back();" class="btn btn-default">Quay lại</button>
       <input type="submit" class="btn btn-primary" value="Tạo">
 </div>
 {!!Form::close()!!}
-<script type="text/javascript" src="{{url('js/multiselect.js')}}" ></script>
 <script type="text/javascript" src="{{url('js/jquery.validate.min.js')}}" ></script>
 <script type="text/javascript">
    $(document).ready(function() {
-    $('#undo_redo').multiselect();
-    $('#undo_redo1').multiselect();
+
     
     $("#FormTaoMoiCogVan").validate({
    rules: {
@@ -140,6 +147,7 @@
    }
 </script>
 <script type="text/javascript">
+  $(".livesearch").chosen();
    var _gaq = _gaq || [];
    _gaq.push(['_setAccount', 'UA-36251023-1']);
    _gaq.push(['_setDomainName', 'jqueryscript.net']);

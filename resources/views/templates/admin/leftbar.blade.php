@@ -44,8 +44,8 @@
                                 float: right;
                                 font-size: 16px;">
                                 Xin chào, 
-                                <b>Admin</b> 
-                                &nbsp; <a href="" class="btn btn-danger square-btn-adjust">Đăng xuất</a>
+                                <b>{{Session::get('username')}}</b> 
+                                &nbsp; <a href="{{url('/dang-xuat')}}" class="btn btn-danger square-btn-adjust">Đăng xuất</a>
                                 </div>
                         </li>
                     </ul>
