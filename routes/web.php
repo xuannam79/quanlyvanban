@@ -91,6 +91,7 @@ Route::namespace('Admin')->group(function(){
 	    'uses' =>'IndexController@index',
 	    'as' => 'admin.index'
 	]);
+	//nhan su
 	Route::get('/admin/quanlynhansu', [
 	    'uses' =>'NhanSuController@index',
 	    'as' => 'admin.nhansu.index'
@@ -118,6 +119,39 @@ Route::namespace('Admin')->group(function(){
 	Route::post('/admin/quanlynhansu/sua-nhan-su/{id}', [
 	    'uses' =>'NhanSuController@postedit',
 	    'as' => 'admin.nhansu.edit'
+	]);
+	//tai san
+	Route::get('/admin/quanlytaisan', [
+	    'uses' =>'TaiSanDonViController@index',
+	    'as' => 'admin.taisan.index'
+	]);
+	
+	Route::get('/admin/quanlytaisan/them-tai-san', [
+	    'uses' =>'TaiSanDonViController@getAdd',
+	    'as' => 'admin.taisan.add'
+	]);
+	Route::post('/admin/quanlytaisan/them-tai-san', [
+	    'uses' =>'TaiSanDonViController@postAdd',
+	    'as' => 'admin.taisan.add'
+	]);
+
+	Route::get('/admin/quanlytaisan/cap-nhat-tai-san/{maTaiSan}', [
+	    'uses' =>'TaiSanDonViController@getEdit',
+	    'as' => 'admin.taisan.update'
+	]);
+	Route::post('/admin/quanlytaisan/cap-nhat-tai-san/{maTaiSan}', [
+	    'uses' =>'TaiSanDonViController@postEdit',
+	    'as' => 'admin.taisan.update'
+	]);
+
+	Route::get('/admin/quanlytaisan/xoa-tai-san/{maTaiSan}', [
+	    'uses' =>'TaiSanDonViController@delete',
+	    'as' => 'admin.taisan.delete'
+	]);
+
+	Route::post('/admin/quanlytaisan/', [
+	    'uses' =>'TaiSanDonViController@search',
+	    'as' => 'admin.taisan.search'
 	]);
 });
 //Đăng xuất
