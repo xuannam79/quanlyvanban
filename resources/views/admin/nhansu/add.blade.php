@@ -31,7 +31,7 @@
                      </div>
                      <div class="form-group">
                         <label>Tên Nhân Sự</label>
-                        <input class="form-control" type="text" name="name" value="" />
+                        <input class="form-control" style="border: 1px solid #848484;" type="text" name="name" value="" />
                         @if($errors->has('name'))
                         <b><font color="red">{{$errors->first('name')}}!</font></b>
                         @endif

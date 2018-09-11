@@ -21,6 +21,12 @@
                         <p>Quản Trị Nhân Sự</p>
                     </a>
                 </li>
+                <li>
+                    <a id="nhansu"  href="{{Route('admin.taisan.index')}}">
+                        <i class="ti-package"></i>
+                        <p>Quản lý tài sản</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

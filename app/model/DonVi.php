@@ -9,4 +9,8 @@ class DonVi extends Model
     public function getAll(){
     	return DB::table('donvi')->get();
     }
+
+    public function dsDonVi(){
+    	return DB::table('donvi')->get();
+    }
 }

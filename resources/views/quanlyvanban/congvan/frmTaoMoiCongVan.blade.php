@@ -35,28 +35,30 @@
 <h2>Gửi công văn</h2>
 <div>
    {!!Form::open(['route'=>'quanlyvanban.congvan.taomoicongvan','enctype'=>'multipart/form-data','onsubmit'=>'setSelected();','id'=>'FormTaoMoiCongVan'])!!}
+   {{csrf_field()}}
    <div class="form-group">
       <label class="lbl_ThemCongVan">Số công văn(<font color="red">*</font>) :</label>
-      {{Form::text('SoCongVan','',['class'=>'form-control'])}}
+      <input type="text" name="SoCongVan" class="form-control">
    </div>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Loại văn bản :</label>
-      {{Form::select('LoaiVanBan',$dsLoaiVanBan,null,['class'=>'form-control'])}}
+      <select name="LoaiVanBan" class="form-control">
+        @foreach($dsLoaiVanBan as $loaiVanBan)
+          <option value="{{$loaiVanBan->MA_L_NVANBAN}}">{{$loaiVanBan->TEN_L_NVANBAN}}</option>
+        @endforeach
+      </select>
    </div>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Ngày ban hành(<font color="red">*</font>) :</label>
-      {{Form::date('NgayBanHanh',\Carbon\Carbon::now(),['class'=>'form-control'])}}
+      <input type="date" name="NgayBanHanh" class="form-control" value="{{\Carbon\Carbon::now()->subDay()->format('Y-m-d')}}">
    </div>
    <div class="form-group">
-      <label class="lbl_ThemCongVan">Ngày hết hiệu lực :</label>
-      {{Form::date('NgayHetHieuLuc','',['class'=>'form-control'])}}
-   </div>
-   <div class="form-group">
-      <label class="lbl_ThemCongVan">Cấp độ quan trọng :</label>&nbspKhẩn{{Form::checkbox('CapDoQuanTrong','1',['class'=>'form-control'])}}
+      <label class="lbl_ThemCongVan">Cấp độ quan trọng :</label>
+      <input type="checkbox" name="CapDoQuanTrong" value="1" class="form-control">&nbspKhẩn
    </div>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Trích yếu nội dung(<font color="red">*</font>) :</label>
-      {{Form::textarea('TrichYeuNoiDung','',['size'=>'50x2','class'=>'form-control'])}}
+      <textarea name="TrichYeuNoiDung" size="50x2" class="form-control"></textarea>
    </div><br>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Người gửi:&nbsp</label> <div style="float: left;">{{Session::get('tenNhanSu')}}</div>
@@ -66,41 +68,43 @@
    </div><br>
    <div class="form-group">
       <label class="lbl_ThemCongVan">File đính kèm(<font color="red">*</font>) :</label>
-      {{Form::file('FileDinhKem[]',['multiple'=>'true','class'=>'form-control-file'])}}
+      <input type="file" name="FileDinhKem[]" multiple="true" class="form-control-file">
       @if($errors->has('FileDinhKem'))
          <b><font color="red">{{$errors->first('FileDinhKem')}}!</font></b>
       @endif
    </div>
    <div class="form-group">
       <label class="lbl_ThemCongVan">Người ký duyệt(<font color="red">*</font>) :</label>
-      <select class="form-control"></select>
+      <select class="form-control" name="NguoiKyDuyet">
+        @foreach($dsNguoiKyDuyet as $nguoiKyDuyet)
+          <option value="{{$nguoiKyDuyet->MA_NHAN_SU}}">{{$nguoiKyDuyet->HO_VA_TEN}}</option>
+        @endforeach
+      </select>
    </div><br>
    <div style="float: left;">
    <label class="lbl_ThemCongVan">Nơi lưu nhận(chọn 1 trong 3) :</label>
-   {{Form::radio('LoaiGui','1',true,['onchange'=>'NS_Click();','id'=>'chon'])}}<label>Cá nhân</label>
+   {{Form::radio('LoaiGui','1',true,['onchange'=>'NS_Click();','id'=>'chon'])}}
+   <label>Cá nhân</label>
    {{Form::radio('LoaiGui','2',false,['onchange'=>'DV_Click();'])}}<label>Đơn vị</label>
    {{Form::radio('LoaiGui','3',false,['onchange'=>'TC_Click();'])}}<label>Tất cả cả các đơn vị</label>
    </div>
 </div>
 <div id='NhanSu' style="margin-top: 1%;">
 <br>
-   
 
-    
-          <div class="form-group">
-            <label>Nhập từ khóa và chọn tên người nhận:</label>
-            <select class="form-control select2" name="GuiChoCaNhan[]" multiple="">
+            <label>Nhập từ khóa và chọn tên người nhận:</label><br>
+            <select class="livesearch" name="GuiChoCaNhan[]" multiple="" style="width: 100%;">
               @foreach($dsNhanSu as  $value)
                   <option value="{{$value->MA_NHAN_SU}}">{{$value->HO_VA_TEN}}</option>
               @endforeach
             </select>
-         </div>
-
 </div>
 <div id='DonVi' style="margin-top: 1%;">
    <br><label>Gửi cho:</label><br>
-   <select>
-     <option>aaaaaaaaa</option>
+   <select name="GuiCho" class="form-control">
+     <option value="1">Gửi cho trưởng đơn vị</option>
+     <option value="2">Gửi cho phó đơn vị</option>
+     <option value="3">Gửi cho tất cả các thành viên trong đơn vị</option>
    </select><br>
             <label>Nhập từ khóa và chọn các đơn vị nhận:</label>
             <div>
@@ -118,23 +122,6 @@
 {!!Form::close()!!}
 <script type="text/javascript" src="{{url('js/jquery.validate.min.js')}}" ></script>
 <script type="text/javascript">
-   $(document).ready(function() {
-
-    
-    $("#FormTaoMoiCogVan").validate({
-   rules: {
-     TrichYeuNoiDung: "required",
-     SoCongVan: "required",
-     NgayBanHanh: "required"
-     
-  },
-   messages: {
-     TrichYeuNoiDung: "<font color='red'>Trích yếu nội dung không được để trống!</font>",
-     SoCongVan: "<font color='red'>Số văn bản không được để trống!</font>",
-     NgayBanHanh: "<font color='red'>Ngày ban hành không được để trống!</font>"
-   }
-   });
-   });
    function setSelected(){
         var caNhan = document.getElementById('undo_redo_to');
         for (var i=0; i<caNhan.options.length; i++) {

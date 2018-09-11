@@ -17,17 +17,18 @@ class CongVanController extends Controller
     }
     
     function trangChu(){
-        if(!Session::has('username'))
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
             return redirect(route('quanlyvanban.auth.index'));
         return view('quanlyvanban.congvan.index');
     }
 
     //Danh sách công văn
     function danhSachCongvanDi(Request $request){
-        if(!Session::has('username'))
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
             return redirect()->route('quanlyvanban.auth.index');
         $dsCongVanDi = $this->congVan->danhSachCongVanDi();
         $dsDonVi = $this->donVi->getAll();
+        //lay danh sach file dinh kem dua vao 1 mang voi index la socongvan va gia tri la mang file dinh kem theo socongvan do
         $dsFile = array();
         foreach($dsCongVanDi as $congVan){
             $soCongVan = $congVan->SO_CONG_VAN;
@@ -50,8 +51,11 @@ class CongVanController extends Controller
     }
 
     function danhSachCongVanDen(Request $request){
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
+            return redirect()->route('quanlyvanban.auth.index');
         $dsDonVi = $this->donVi->getAll();
         $dsCongVanDen = $this->congVan->danhSachCongVanDen();
+        //lay danh sach file dinh kem dua vao 1 mang voi index la socongvan va gia tri la mang file dinh kem theo socongvan do
         $dsFile = array();
         foreach($dsCongVanDen as $congVan){
             $soCongVan = $congVan->SO_CONG_VAN;
@@ -77,7 +81,10 @@ class CongVanController extends Controller
         //var_dump($KeyWord);
         return view('quanlyvanban.congvan.DanhSachCongVanDen',compact('dsDonVi','dsCongVanDen','dsFile'));
     }
+
     public function danhSachCongVanDen_TimKiemnangCao(){
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
+            return redirect()->route('quanlyvanban.auth.index');
         return view('quanlyvanban.congvan.DanhSachCongVanDen_TimKiemNangCao');
     }
     
@@ -85,41 +92,25 @@ class CongVanController extends Controller
     //---------------------------------------------------------------------------------------------------------------------------------
     //Tạo mới công văn
     public function getTaoMoiCongVan(){
-    	$LoaiVanBan = \DB::table('l_vanban')->get()->toArray();
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
+            return redirect()->route('quanlyvanban.auth.index');
+    	$dsLoaiVanBan = \DB::table('l_vanban')->get()->toArray();
     	$dsDonVi = \DB::table('donvi')->get()->toArray();
     	$dsNhanSu = \DB::table('nhansu')->get();
-    	$dsLoaiVanBan = array();
-    	foreach ($LoaiVanBan as $item) {
-    		$dsLoaiVanBan[ $item->MA_L_NVANBAN] = $item->TEN_L_NVANBAN;
-    	}
-    	//danh sách các mảng tham số truyền vào view
-    	$data = array('dsLoaiVanBan'=>$dsLoaiVanBan,'dsDonVi'=>$dsDonVi,'dsNhanSu'=>$dsNhanSu);
-    	return view('quanlyvanban.congvan.frmTaoMoiCongVan')->with($data);
+        $dsNguoiKyDuyet = $this->nhanSu->getByIdDonVi(Session::get("maDonVi"));
+    	return view('quanlyvanban.congvan.frmTaoMoiCongVan',compact('dsNguoiKyDuyet','dsLoaiVanBan','dsDonVi','dsNhanSu'));
     }
 
     function postTaoMoiCongVan(Request $request){
-    	$this->Validate(
-            $request,
-            [
-                'FileDinhKem' => 'required'
-            ],
-            [
-                'required' => ':attribute'
-            ],
-            [
-                'FileDinhKem' => 'Chưa chọn File đính kèm'
-            ]
-        );
-    	$soCongVan = $request->all()['SoCongVan'];
-    	$loaiVanBan = $request->all()['LoaiVanBan'];
-    	$ngayBanHanh = $request->all()['NgayBanHanh'];
-    	$capDoQuanTrong = isset($request->all()['CapDoQuanTrong'])?'1':'0';
-        
+    	$soCongVan = $request->SoCongVan;
+    	$loaiVanBan = $request->LoaiVanBan;
+    	$ngayBanHanh = $request->NgayBanHanh;
+    	$capDoQuanTrong = isset($request->CapDoQuanTrong)?'1':'0';
     	$donViBanHanh = Session::get('maDonVi');
-    	$trichYeuNoiDung = $request->all()['TrichYeuNoiDung'];
+    	$trichYeuNoiDung = $request->TrichYeuNoiDung;
+        $nguoiGui = session('maNhanSu');
+        $nguoiKyDuyet = $request->NguoiKyDuyet;
     	$FileDinhKem = ($request->file('FileDinhKem')!==null)?$request->file('FileDinhKem'):array();
-    	$nguoiGui = session('maNhanSu');
-    	$nguoiKyDuyet = $request->all()['NguoiKyDuyet'];
     	$loaiGui = $request->all()['LoaiGui'];
     	//them vao bảng congvan
     	\DB::table('congvan')->insert(array('SO_CONG_VAN'=>$soCongVan,'LOAI_VAN_BAN'=>$loaiVanBan,'NGAY_BAN_HANH'=>$ngayBanHanh,'DON_VI_BAN_HANH'=>$donViBanHanh,'CAP_DO_QUAN_TRONG'=>$capDoQuanTrong,'TRICH_YEU_NOI_DUNG'=>$trichYeuNoiDung,'NGUOI_GUI'=>$nguoiGui,'NGUOI_KY_DUYET'=>$nguoiKyDuyet,'LOAI_GUI'=>$loaiGui));
@@ -157,6 +148,8 @@ class CongVanController extends Controller
     //---------------------------------------------------------------------------------------------------------------------------------
     //Chỉnh sửa công văn
     public function frmChinhSuaCongVan($soCongVan){
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
+            return redirect()->route('quanlyvanban.auth.index');
         //khai báo biến
         $congvan = \DB::table('congvan')->where('SO_CONG_VAN',$soCongVan)->get();
         $LoaiVanBan = \DB::table('l_vanban')->get()->toArray();
@@ -238,6 +231,8 @@ class CongVanController extends Controller
     //---------------------------------------------------------------------------------------------------------------------------------
     //Phản hồi công văn
     public function getPhanHoiCongVan($soCongVan){
+        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
+            return redirect()->route('quanlyvanban.auth.index');
         $dsPhanHoi = \DB::table('congvan_phanhoi')->select('NOI_DUNG_PHAN_HOI','TEN_DON_VI','congvan_phanhoi.MA_DON_VI','congvan_phanhoi.MA_PHAN_HOI')->join('donvi','congvan_phanhoi.MA_DON_VI','=','donvi.MA_DON_VI')->where('SO_CONG_VAN',$soCongVan)->get()->toArray();
 
         $dsFile =  \DB::table('congvan_phanhoi_filedinhkem')->get()->toArray();

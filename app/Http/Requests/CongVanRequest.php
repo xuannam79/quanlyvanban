@@ -13,7 +13,7 @@ class CongVanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class CongVanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "SoCongVan"=>"required",
+            "NgayBanHanh"=>"required",
+            "NgayHetHieuLuc"=>"required",
+            "TrichYeuNoiDung"=>"required",
+            "FileDinhKem"=>"required",
+            "LoaiGui"=>"required",
+        ];
+    }
+    public function messages(){
+        return [
+            'SoCongVan.required' => 'Trường này không được để trống',
+            'NgayBanHanh.required' => 'Trường này không được để trống',
+            'NgayHetHieuLuc.required' => 'Trường này không được để trống',
+            'TrichYeuNoiDung.required' => 'Trường này không được để trống',
+            'FileDinhKem.required' => 'Vui lòng chọn file đính kèm cho công văn',
+            'LoaiGui.required' => 'vui lòng chọn loại gửi',
         ];
     }
 }

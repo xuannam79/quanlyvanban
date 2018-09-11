@@ -8,7 +8,7 @@ use Session;
 class CongVan extends Model
 {
     public function danhSachCongVanDen(){ 
-        return DB::table('dscongvanden')->where('MA_CVNS',Session::get('maNhanSu'))->orWhere('MA_CVDV',Session::get('maDonVi'))->where('LOAI_GUI',Session::get('chucVu'))->paginate(3);
+        return DB::table('dscongvanden')->where('MA_CVNS',Session::get('maNhanSu'))->orWhere('MA_CVDV',Session::get('maDonVi'))->where('LOAI_GUI',Session::get('chucVu'))->orWhere('LOAI_GUI',3)->paginate(3);
     }
     public function fileDinhKem($soCongVan){
         return DB::table('congvan_filedinhkem')->select('FILE_DINH_KEM')->where('SO_CONG_VAN',$soCongVan)->get();
@@ -17,8 +17,8 @@ class CongVan extends Model
         return DB::table('congvan')->join('donvi','donvi.MA_DON_VI','=','congvan.DON_VI_BAN_HANH')->where('NGUOI_GUI',Session::get('maNhanSu'))->paginate(3);
     }
 
-    public function taoMoiCongVan(){
-
+    public function taoMoiCongVan($soCongVan,$loaiVanBan,$ngayBanHanh,$donViBanHanh,$capDoQuanTrong,$trichYeuNoiDung,$nguoiGui,$nguoiKyDuyet,$loaiGui){
+        \DB::table('congvan')->insert(array('SO_CONG_VAN'=>$soCongVan,'LOAI_VAN_BAN'=>$loaiVanBan,'NGAY_BAN_HANH'=>$ngayBanHanh,'DON_VI_BAN_HANH'=>$donViBanHanh,'CAP_DO_QUAN_TRONG'=>$capDoQuanTrong,'TRICH_YEU_NOI_DUNG'=>$trichYeuNoiDung,'NGUOI_GUI'=>$nguoiGui,'NGUOI_KY_DUYET'=>$nguoiKyDuyet,'LOAI_GUI'=>$loaiGui));
     }
 
     public function timCongVanDenTheoSoCongVan($soCongVan){
