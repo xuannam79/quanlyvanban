@@ -82,10 +82,17 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'BieuMauController@postTaoMoiBieuMau',
 		'as'=>'quanlyvanban.bieumau.taomoibieumau'
 	]);
-
+	Route::get('/gui-tin-nhan',[
+		'uses'=>'GuiTinNhanController@getGuiTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.index',
+	]);
+	Route::post('/gui-tin-nhan',[
+		'uses'=>'GuiTinNhanController@postGuiTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.index',
+	]);
 });
-//Admin
 
+//Admin
 Route::namespace('Admin')->group(function(){
 	Route::get('/admin-page', [
 	    'uses' =>'IndexController@index',
