@@ -82,7 +82,6 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'BieuMauController@postTaoMoiBieuMau',
 		'as'=>'quanlyvanban.bieumau.taomoibieumau'
 	]);
-<<<<<<< HEAD
 
 	Route::get('/nhan-su-don-vi',[
 		'uses'=>'NhanSuController@nhanSuDonVi',
@@ -93,7 +92,6 @@ Route::namespace('quanlyvanban')->group(function(){
 		'as'=>'quanlyvanban.nhansu.chitietnhansudonvi'
 	]);
 
-=======
 	Route::get('/gui-tin-nhan',[
 		'uses'=>'GuiTinNhanController@getGuiTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.index',
@@ -102,7 +100,6 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'GuiTinNhanController@postGuiTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.index',
 	]);
->>>>>>> cbf330a0fe7c9cac7f3687be1873aa5a5790084d
 });
 
 //Admin
