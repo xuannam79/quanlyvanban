@@ -16,10 +16,7 @@ class CongVanController extends Controller
         $this->donVi = $donVi;
     }
     
-    function trangChu(){
-        if(!Session::has('username') || Session::get('quyenTruyCap')==3)
-            return redirect(route('quanlyvanban.auth.index'));
-        return view('quanlyvanban.congvan.index');
+    public function trangChu(){
     }
 
     //Danh sách công văn
