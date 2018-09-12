@@ -7,7 +7,7 @@
                <a href="{{route('quanlyvanban.congvan.taomoicongvan')}}">Tạo mới và lưu văn bản</a>
                @endif
             </div>
-            
+
             <button class="dropdown-btn">BIỂU MẪU </button>
             <div class="dropdown-container">
                <a href="{{route('quanlyvanban.bieumau.danhsachbieumau')}}">Biểu mẫu</a>
@@ -36,5 +36,10 @@
                <a href="#">Các ngày lễ, ngày nghỉ trong năm</a>
                <a href="#">Tài sản đơn vị</a>
                <a href="{{Route('quanlyvanban.nhansu.nhansudonvi')}}">Nhân sự đơn vị</a>
+            </div>
+            <button class="dropdown-btn">GỬI TIN NHẮN </button>
+            <div class="dropdown-container">
+               <a href="{{ route('quanlyvanban.guitinnhan.index') }}">Gửi tin nhắn</a>
+               <a href="#">Nhận tin nhắn</a>
             </div>
          </div>
