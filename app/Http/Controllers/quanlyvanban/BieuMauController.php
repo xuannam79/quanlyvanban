@@ -11,7 +11,7 @@ use App\DonVi;
 use App\Model\NhanSu;
 class BieuMauController extends Controller
 {
-    public function __construct(BieuMau $bieuMau,NhanSU $nhanSu,DonVi $donVi){
+    public function __construct(BieuMau $bieuMau,NhanSu $nhanSu,DonVi $donVi){
         $this->bieuMau = $bieuMau;
         $this->donVi = $donVi;
         $this->nhanSu = $nhanSu;

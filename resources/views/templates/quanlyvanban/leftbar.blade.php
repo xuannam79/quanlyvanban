@@ -34,5 +34,7 @@
             <div class="dropdown-container">
                <a href="#">Sổ địa chỉ các đơn vị</a>
                <a href="#">Các ngày lễ, ngày nghỉ trong năm</a>
+               <a href="#">Tài sản đơn vị</a>
+               <a href="{{Route('quanlyvanban.nhansu.nhansudonvi')}}">Nhân sự đơn vị</a>
             </div>
          </div>

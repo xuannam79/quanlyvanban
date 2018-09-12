@@ -1,4 +1,4 @@
-@extends('layout.MainLayout_Admin')
+@extends('templates.quanlyvanban.master')
 @section('NoiDung')
 <div style="margin: 3%;">
 <style type="text/css">
@@ -9,12 +9,12 @@
 	}
 	.ThongTinNhanSu{
 		width: 520px;
-		float: right;
+		float: left;
+		text-align: left;
 	}
 </style>
-	<h2>Thông tin nhân sự</h2>
-	<h3>1. Sơ yếu lí lịch.</h3>
-	<img src="{{url('img/login.png')}}"  class="AnhDaiDien" >
+<a style="float: left;" href="{{route('quanlyvanban.nhansu.nhansudonvi')}}"><span class="glyphicon glyphicon-arrow-left"></span> Quay về</a>
+	<h2>Thông tin nhân sự</h2><br>
 	<div class="ThongTinNhanSu">
 		<p style="margin-left: 10%;">
 			<label>Mã nhân sự:</label> {{$nhanSu[0]->MA_NHAN_SU}} <br>
@@ -25,8 +25,7 @@
 			<label>Số điện thoại:</label> {{$nhanSu[0]->SO_DIEN_THOAI}} <br>
 			<label>Email:</label> {{$nhanSu[0]->EMAIL}}
 		</p>	
-	</div>
-	<h3>2. Đơn vị công tác.</h3>
+	</div><br>
 	<div>
 	@if($dsChucVu!=null)
 		<table class="table table-hover">
@@ -36,11 +35,11 @@
 				<th>Chức vụ đảm nhiệm</th>
 			</thead>
 			<tbody>
-			@foreach($dsChucVu as $key=>$value)
+			@foreach($dsChucVu as $chucVu)
 				<tr>
-					<td>{{$value->TU_NGAY}} {{$value->DEN_NGAY==''?' đến nay':'- '.$value->DEN_NGAY}}</td>
-					<td>{{$value->TEN_DON_VI}}</td>
-					<td>{{$value->TEN_CHUC_VU}}</td>
+					<td>{{$chucVu->TU_NGAY}} {{$chucVu->DEN_NGAY==''?' đến nay':'- '.$chucVu->DEN_NGAY}}</td>
+					<td>{{$chucVu->TEN_DON_VI}}</td>
+					<td>{{$chucVu->TEN_CHUC_VU}}</td>
 				</tr>
 				
 			</tbody>
@@ -49,7 +48,6 @@
 		@else
 		<center>Chưa làm việc ở đơn vị nào</center>
 	@endif
-	<center><button class="btn btn-primary" onclick="history.back();">Quay lại</button></center>
 	</div>
 	</div>
 @endsection

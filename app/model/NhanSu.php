@@ -15,6 +15,17 @@ class NhanSu extends Model
    	  return DB::table('nhansu')->distinct()->paginate(3); 
     }
 
+    public function getByMaDonVi($maDonVi){
+      return DB::table('nhansu')->select('nhansu_thuocdonvi.MA_NHAN_SU','HO_VA_TEN','nhansu.SO_DIEN_THOAI','EMAIL')->join('nhansu_thuocdonvi','nhansu.MA_NHAN_SU','=','nhansu_thuocdonvi.MA_NHAN_SU')->where('MA_DON_VI',$maDonVi)->paginate(5);
+    }
+    public function getDanhSachChucVu($maNhanSu){
+      return DB::table('nhansu_thuocdonvi')->select('TU_NGAY','DEN_NGAY','TEN_DON_VI','TEN_CHUC_VU')->join('donvi','donvi.MA_DON_VI','=','nhansu_thuocdonvi.MA_DON_VI')->join('chucvu','chucvu.MA_CHUC_VU','=','nhansu_thuocdonvi.MA_CHUC_VU')->where('nhansu_thuocdonvi.MA_NHAN_SU',$maNhanSu)->get();
+    }
+
+    public function getByMaNhanSu($maNhanSu){
+      return DB::table('nhansu')->select('nhansu_thuocdonvi.MA_NHAN_SU','HO_VA_TEN','NAM_SINH','GIOI_TINH','DIA_CHI','nhansu.SO_DIEN_THOAI','EMAIL')->join('nhansu_thuocdonvi','nhansu.MA_NHAN_SU','=','nhansu_thuocdonvi.MA_NHAN_SU')->where('nhansu.MA_NHAN_SU',$maNhanSu)->paginate(5);
+    }
+
     public function themNhanSu($id,$hoten,$namsinh,$gioitinh,$diachi,$sodienthoai,$email){
    	  return DB::table('nhansu')->insert(['MA_NHAN_SU' => $id ,'HO_VA_TEN' => $hoten,'NAM_SINH' => $namsinh,'GIOI_TINH' => $gioitinh,'DIA_CHI' => $diachi,'SO_DIEN_THOAI' => $sodienthoai,'EMAIL' => $email]);
     }

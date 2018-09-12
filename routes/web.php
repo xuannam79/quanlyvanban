@@ -83,6 +83,15 @@ Route::namespace('quanlyvanban')->group(function(){
 		'as'=>'quanlyvanban.bieumau.taomoibieumau'
 	]);
 
+	Route::get('/nhan-su-don-vi',[
+		'uses'=>'NhanSuController@nhanSuDonVi',
+		'as'=>'quanlyvanban.nhansu.nhansudonvi'
+	]);
+	Route::get('/chi-tiet-nhan-su-don-vi-{maNhanSu}',[
+		'uses'=>'NhanSuController@chiTietNhanSuDonVi',
+		'as'=>'quanlyvanban.nhansu.chitietnhansudonvi'
+	]);
+
 });
 //Admin
 

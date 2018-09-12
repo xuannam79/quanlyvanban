@@ -1,30 +1,15 @@
-@extends('layout.MainLayout_Admin')
+@extends('templates.quanlyvanban.master')
 @section('NoiDung')
-<div style="margin: 5%;">
-<h2>Danh sách nhân sự</h2>         
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Mã nhân sự</th>
-        <th>Họ và tên</th>
-        <th>Năm sinh</th>
-        <th>Giới tính</th>
-        <th>Địa chỉ</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-    @foreach($dsNhanSu as $key=>$value)
-      <tr>
-        <td>{{$value->MA_NHAN_SU}}</td>
-        <td>{{$value->HO_VA_TEN}}</td>
-        <td>{{$value->NAM_SINH}}</td>
-        <td>{{$value->GIOI_TINH}}</td>
-        <td>{{$value->DIA_CHI}}</td>
-        <td><a class="btn btn-info" href="{{ url("/ChiTietNhanSu/$value->MA_NHAN_SU") }}"><span class="glyphicon glyphicon-search"></span> Xem chi tiết</a></td>
-      </tr>
-    @endforeach
-    </tbody>
-  </table>
+  <h2>Danh sách nhân sự trong đơn vị</h2> <br>
+  <div style="margin-left: 5%;margin-top: 3%;">
+  @foreach($dsNhanSu as $nhanSu)
+    <p style='text-align: left;'>
+                        Họ và tên: <a href="{{Route('quanlyvanban.nhansu.chitietnhansudonvi',['maNhanSu'=>$nhanSu->MA_NHAN_SU])}}">{{$nhanSu->HO_VA_TEN}}</a> <br>
+                        Số điện thoại: {{$nhanSu->SO_DIEN_THOAI}} <br>
+                        Địa chỉ email: {{$nhanSu->EMAIL}}
+                </p><hr>
+
+  @endforeach
+  {{$dsNhanSu->links()}}
   </div>
 @endsection
