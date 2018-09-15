@@ -23,7 +23,7 @@ Route::namespace('Auth')->group(function(){
 // Quản lý văn bản
 Route::namespace('quanlyvanban')->group(function(){
 	Route::get('/trang-chu',[
-		'uses'=>'CongVanController@trangChu',
+		'uses'=>'TinNhanController@tinNhanMoiNhat',
 		'as'=>'quanlyvanban.congvan.index'
 	]);
 	Route::get('/danh-sach-cong-van-den',[
