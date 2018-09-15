@@ -1,17 +1,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href ="{{url('css/layout.css')}}">
 
-<title> Home </title>
+<title> Trang chủ </title>
 <form action="MainForm.php" method="POST" class="form">
 	<div class="TieuDe">
 		<div class="banner">
-		<img src="img/BANNER.jpg" alt="Banner" />
-		<div style="
-			padding: 15px 50px 5px 50px;
-			float: right;
-			font-size: 16px;">
+		<a href="{{ route('quanlyvanban.congvan.index') }}" title=""><img src="img/BANNER.jpg" alt="Banner" /></a>
+		<marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="8" class="marquee"><i>** Chào mừng các bạn đến với Hệ Thống Tác Nghiệp - Trường Đại học Nội Vụ Hà Nội **</i> </marquee>
+		<div class="logout">
 			Xin chào, <b> {{Session::get('username')}}</b>
-			&nbsp; <a href="{{url('/dang-xuat')}}" class="btn btn-danger square-btn-adjust">Đăng xuất</a> 
+			&nbsp;
+			<a href="{{url('/dang-xuat')}}">
+			<i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a>
 		</div>
 		</div>
 		<div id="content" class="NoiDung">
@@ -40,7 +40,7 @@
 						<i class="fa fa-send"></i> <a href='#'> Viết bài tham luận </a> <span> Tên người gửi </span> 
 					</td>	
 				  </tr>
-    	
+
     			</table>
     			<table class="TinNhanDi">
 					<tr>

@@ -132,3 +132,23 @@ button.btn-primary2:hover
 	width: 30%;
 	border-radius: 90%;
 }
+.marquee {
+	background: #C2D3D7;
+	font-size: 18px;
+	border: 1px solid #C2D3D7;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+.logout {
+	padding: 15px 50px 5px 50px;
+	float: right;
+	font-size: 18px;
+}
+.logout a {
+	text-decoration: none;
+	font-size: 17px;
+	color: #2C80E0;
+}
+.logout a:hover {
+	color: #F3D330;
+}

@@ -18,14 +18,14 @@
    <body>
       <div class="TieuDe">
       <div class="banner">
-         <img src="{{url('img/BANNER.jpg')}}" alt="Banner" />
-         <div style="
-            padding: 15px 50px 5px 50px;
-            float: right;
-            font-size: 16px;">
-            Xin chào, <b>{{Session::get('username')}}</b>
-            &nbsp; <a href="{{url('/dang-xuat')}}"><span class="glyphicon glyphicon-log-out"></span> Đăng xuất</a> 
-         </div>
+         <a href="{{ route('quanlyvanban.congvan.index') }}" title=""><img src="img/BANNER.jpg" alt="Banner" /></a>
+      <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="8" class="marquee"><i>** Chào mừng các bạn đến với Hệ Thống Tác Nghiệp - Trường Đại học Nội Vụ Hà Nội **</i> </marquee>
+      <div class="logout">
+         Xin chào, <b> {{Session::get('username')}}</b>
+         &nbsp;
+         <a href="{{url('/dang-xuat')}}">
+         <i class="fa fa-sign-out" aria-hidden="true"></i>Đăng xuất</a>
+      </div>
       </div>
    </body>
 </html>
