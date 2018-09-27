@@ -12,6 +12,18 @@ class GuiTinNhanController extends Controller
 	}
 
 	public function postGuiTinNhan(){
-		
+
+	}
+
+	public function getNhanTinNhan(){
+		return view('quanlyvanban.guitinnhan.nhantinnhan');
+	}
+
+	public function postNhanTinNhan(){
+		return view('quanlyvanban.guitinnhan.nhantinnhan');
+	}
+
+	public function chiTietTinNhan(){
+		return view('quanlyvanban.guitinnhan.chitiettn');
 	}
 }
