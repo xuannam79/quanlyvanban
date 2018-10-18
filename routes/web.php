@@ -102,17 +102,17 @@ Route::namespace('quanlyvanban')->group(function(){
 	]);
 
 	Route::get('/nhan-tin-nhan',[
-		'uses'=>'GuiTinNhanController@getNhanTinNhan',
+		'uses'=>'TinNhanController@getNhanTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.nhantinnhan',
 	]);
 	Route::post('/nhan-tin-nhan',[
-		'uses'=>'GuiTinNhanController@postNhanTinNhan',
+		'uses'=>'TinNhanController@postNhanTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.nhantinnhan',
 	]);
 
-	Route::get('/chi-tiet-tin-nhan',[
-		'uses'=>'GuiTinNhanController@chiTietTinNhan',
-		'as'=>'quanlyvanban.guitinnhan.chitiettn',
+	Route::get('/chi-tiet-tin-nhan/{id}',[
+		'uses'=>'TinNhanController@chiTietTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.detail',
 	]);
 });
 

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 class TinNhan extends Model
 {
+    public function getAll(){
+        return DB::table('tinnhan')->get();
+    }
+
     public function tinNhanMoiNhat($maNhanSu){
     	return DB::table('tinnhan')->select('NOI_DUNG','HO_VA_TEN')->join('nhansu','NGUOI_GUI','=','MA_NHAN_SU')->orderByRaw('NGAY_GUI,GIO_GUI desc')->where('NGUOI_NHAN',$maNhanSu)->take(5)->get();
     }
@@ -19,7 +23,7 @@ class TinNhan extends Model
     }
 
     public function docTinNhan($maTinNhan){
-    	
+    	return DB::table('tinnhan')->select('MA_TIN_NHAN','NGUOI_GUI','NOI_DUNG','NGAY_GUI')->where('MA_TIN_NHAN',$maTinNhan)->first();
     }
 
     public function luuFileDinhKem($nguoiGui, $nguoiNhan, $tenFile){
