@@ -100,6 +100,20 @@ Route::namespace('quanlyvanban')->group(function(){
 		'uses'=>'TinNhanController@postGuiTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.index',
 	]);
+
+	Route::get('/nhan-tin-nhan',[
+		'uses'=>'GuiTinNhanController@getNhanTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.nhantinnhan',
+	]);
+	Route::post('/nhan-tin-nhan',[
+		'uses'=>'GuiTinNhanController@postNhanTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.nhantinnhan',
+	]);
+
+	Route::get('/chi-tiet-tin-nhan',[
+		'uses'=>'GuiTinNhanController@chiTietTinNhan',
+		'as'=>'quanlyvanban.guitinnhan.chitiettn',
+	]);
 });
 
 //Admin
@@ -142,7 +156,7 @@ Route::namespace('Admin')->group(function(){
 	    'uses' =>'TaiSanDonViController@index',
 	    'as' => 'admin.taisan.index'
 	]);
-	
+
 	Route::get('/admin/quanlytaisan/them-tai-san', [
 	    'uses' =>'TaiSanDonViController@getAdd',
 	    'as' => 'admin.taisan.add'

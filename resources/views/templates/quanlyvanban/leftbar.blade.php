@@ -40,6 +40,6 @@
    <button class="dropdown-btn">GỬI TIN NHẮN </button>
    <div class="dropdown-container">
       <a href="{{ route('quanlyvanban.guitinnhan.index') }}">Gửi tin nhắn</a>
-      <a href="#">Nhận tin nhắn</a>
+      <a href="{{ route('quanlyvanban.guitinnhan.nhantinnhan') }}">Nhận tin nhắn</a>
    </div>
 </div>
