@@ -93,11 +93,11 @@ Route::namespace('quanlyvanban')->group(function(){
 	]);
 
 	Route::get('/gui-tin-nhan',[
-		'uses'=>'GuiTinNhanController@getGuiTinNhan',
+		'uses'=>'TinNhanController@getGuiTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.index',
 	]);
 	Route::post('/gui-tin-nhan',[
-		'uses'=>'GuiTinNhanController@postGuiTinNhan',
+		'uses'=>'TinNhanController@postGuiTinNhan',
 		'as'=>'quanlyvanban.guitinnhan.index',
 	]);
 });

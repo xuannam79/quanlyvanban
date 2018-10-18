@@ -16,7 +16,7 @@
    @if(Session::get('quyenTruyCap')==1)
    <button class="dropdown-btn">NHÂN SỰ </button>
    <div class="dropdown-container">
-      <a href="{{url('/DanhSachNhanSu')}}">Danh sách nhân sự</a>
+      <a href="{{Route('quanlyvanban.nhansu.nhansudonvi')}}">Nhân sự đơn vị</a>
       <a href="{{url('/FormThemNhanSu')}}">Ủy quyền</a>
    </div>
    @endif
@@ -36,7 +36,6 @@
       <a href="#">Sổ địa chỉ các đơn vị</a>
       <a href="#">Các ngày lễ, ngày nghỉ trong năm</a>
       <a href="#">Tài sản đơn vị</a>
-      <a href="{{Route('quanlyvanban.nhansu.nhansudonvi')}}">Nhân sự đơn vị</a>
    </div>
    <button class="dropdown-btn">GỬI TIN NHẮN </button>
    <div class="dropdown-container">

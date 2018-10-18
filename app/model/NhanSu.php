@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 class NhanSu extends Model
 {
     public function getAll(){
-      return \DB::table('nhansu')->get();
+      return DB::table('nhansu')->get();
     }
-
+    public function getAllExceptMe($maNhanSu){
+      return DB::table('nhansu')->where('MA_NHAN_SU','!=',$maNhanSu)->get();
+    }
     public function layDanhSachNhanSu(){
     	//return Cat::OrderBy('cat_id','desc')->get(); // lấy giảm dần
    	  return DB::table('nhansu')->distinct()->paginate(3); 

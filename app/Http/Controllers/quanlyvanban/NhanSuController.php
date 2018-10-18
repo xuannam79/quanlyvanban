@@ -16,7 +16,6 @@ class NhanSuController extends Controller
         $data = \DB::table('nhansu')->get()->toArray();
         return view('DanhSachNhanSu')->with(['dsNhanSu'=>$data]);
     }
-
     public function nhanSuDonVi(){
         $dsNhanSu = $this->nhanSu->getByMaDonVi(Session::get('maDonVi'));
         return view('quanlyvanban.nhansu.index',compact('dsNhanSu'));
@@ -25,5 +24,8 @@ class NhanSuController extends Controller
         $nhanSu = $this->nhanSu->getByMaNhanSu($maNhanSu);
         $dsChucVu = $this->nhanSu->getDanhSachChucVu($maNhanSu);
         return view('quanlyvanban.nhansu.ChiTietNhanSu',compact('nhanSu','dsChucVu'));
+    }
+    public function getUyQuyen(){
+        return view('quanlyvanban.nhansu.uyquyen');
     }
 }

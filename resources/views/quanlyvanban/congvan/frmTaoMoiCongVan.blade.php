@@ -92,7 +92,7 @@
 <div id='NhanSu' style="margin-top: 1%;">
 <br>
 
-            <label>Nhập từ khóa và chọn tên người nhận:</label><br>
+            <label style="margin-bottom: 0px;float: left;">Nhập từ khóa và chọn tên người nhận:</label><br>
             <select class="livesearch" name="GuiChoCaNhan[]" multiple="" style="width: 100%;">
               @foreach($dsNhanSu as  $value)
                   <option value="{{$value->MA_NHAN_SU}}">{{$value->HO_VA_TEN}}</option>
@@ -106,7 +106,7 @@
      <option value="2">Gửi cho phó đơn vị</option>
      <option value="3">Gửi cho tất cả các thành viên trong đơn vị</option>
    </select><br>
-            <label>Nhập từ khóa và chọn các đơn vị nhận:</label>
+            <label >Nhập từ khóa và chọn các đơn vị nhận:</label>
             <div>
       <select class="livesearch"  name="GuiChoDonVi[]" multiple="" style="width: 100%;"> 
               @foreach($dsDonVi as  $value)

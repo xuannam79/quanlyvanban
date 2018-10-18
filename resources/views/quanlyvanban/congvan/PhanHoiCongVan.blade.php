@@ -6,8 +6,9 @@
 		margin-left: 3%;
 	}
 </style>
-	<h2>Tình trạng văn bản</h2>
-	<h3>Các phản hồi:</h3>
+	<h2>Phản hồi văn bản</h2>
+	<h4>Văn bản số: {{$soCongVan}}</h4>
+	<h4>Về việc: {{$thongTinvanBan->TRICH_YEU_NOI_DUNG}}</h4>
 	@if(count($dsPhanHoi)==0)
 		<font color="#2E9AFE">Chưa có phản hồi nào cho văn bản này!</font>
 	@else

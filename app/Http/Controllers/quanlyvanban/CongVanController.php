@@ -231,9 +231,9 @@ class CongVanController extends Controller
         if(!Session::has('username') || Session::get('quyenTruyCap')==3)
             return redirect()->route('quanlyvanban.auth.index');
         $dsPhanHoi = \DB::table('congvan_phanhoi')->select('NOI_DUNG_PHAN_HOI','TEN_DON_VI','congvan_phanhoi.MA_DON_VI','congvan_phanhoi.MA_PHAN_HOI')->join('donvi','congvan_phanhoi.MA_DON_VI','=','donvi.MA_DON_VI')->where('SO_CONG_VAN',$soCongVan)->get()->toArray();
-
+        $thongTinvanBan = \DB::table('congvan')->select('TRICH_YEU_NOI_DUNG')->where('SO_CONG_VAN',$soCongVan)->first();
         $dsFile =  \DB::table('congvan_phanhoi_filedinhkem')->get()->toArray();
-        return view('quanlyvanban.congvan.PhanHoiCongVan')->with(array('dsPhanHoi'=>$dsPhanHoi,'soCongVan'=>$soCongVan,'dsFile'=>$dsFile));
+        return view('quanlyvanban.congvan.PhanHoiCongVan',compact('thongTinvanBan','dsPhanHoi','dsFile','soCongVan'));
     }
     public function postPhanHoiCongVan(Request $request){
         $maPhanHoi = time();
