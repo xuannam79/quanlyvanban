@@ -41,4 +41,11 @@ class CongVan extends Model
         return DB::table('congvan')->join('donvi','donvi.MA_DON_VI','=','congvan.DON_VI_BAN_HANH')->where('TRICH_YEU_NOI_DUNG','LIKE','%'.$trichYeuNoiDung.'%')->where('NGUOI_GUI',Session::get('maNhanSu'))->paginate(3);
     }
 
+    public function guiCongVanNhanSu($soCongVan,$maNhanSu){
+        DB::table('congvan_nhansu')->insert(array('SO_CONG_VAN'=>$soCongVan,'MA_NHAN_SU'=>$maNhanSu,'NGAY_NHAN'=>date('y-m-d')));
+    }
+
+    public function guiCongVanDonVi($soCongVan,$maDonVi,$loaiGui){
+        DB::table('congvan_donvi')->insert(array('SO_CONG_VAN'=>$soCongVan,'MA_DON_VI'=>$maDonVi,'LOAI_GUI'=>$loaiGui,'NGAY_NHAN'=>date('y-m-d')));
+    }
 }

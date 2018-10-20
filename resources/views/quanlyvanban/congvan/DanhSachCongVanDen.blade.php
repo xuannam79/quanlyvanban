@@ -14,6 +14,17 @@
    });
 </script>
 <style type="text/css">
+.form-group {
+  text-align: left;
+  position: relative;
+}
+.form-control {
+  position: absolute;
+width:40%;
+left: 50%;
+
+top: 0%;
+}
 .chosen-container .chosen-container-multi .chosen-with-drop .chosen-container-active{
   width: 300px;
 }
@@ -25,8 +36,10 @@
 <div style="margin: 3%;">
    @foreach($dsCongVanDen as $congVan)
    <p style='text-align: left;'>
-      Số ký hiệu văn bản: {{$congVan->SO_CONG_VAN}} - {{$congVan->TEN_DON_VI}} @php echo $congVan->CAP_DO_QUAN_TRONG=='0'?"<i><font color='red'>Khẩn</font></i>":''; @endphp<br>
-      Về việc: {{$congVan->TRICH_YEU_NOI_DUNG}}  - <i>{{$congVan->NGAY_BAN_HANH}}</i>.<a href='{{route('quanlyvanban.congvan.phanhoicongvan',['soCongVan'=>$congVan->SO_CONG_VAN])}}' style='color: red;'>Phản hồi văn bản</a> hoặc chuyển tiếp đến <a href="" >Đơn vị</a> | <a href="" data-toggle="modal" data-target="#ChuyenCaNhan">Cá nhân</a><br>
+      Số ký hiệu văn bản: {{$congVan->SO_CONG_VAN}} - {{$congVan->TEN_DON_VI}} @php 
+          echo $congVan->CAP_DO_QUAN_TRONG=='0'?"<i><font color='red'>Khẩn</font></i>":''; 
+       @endphp<br>
+      Về việc: {{$congVan->TRICH_YEU_NOI_DUNG}}  - <i>{{$congVan->NGAY_BAN_HANH}}</i>.<a href='{{route('quanlyvanban.congvan.phanhoicongvan',['soCongVan'=>$congVan->SO_CONG_VAN])}}' style='color: red;'>Phản hồi văn bản</a> hoặc chuyển tiếp đến <a href="" onclick="chuyenTiepDonVi('{{$congVan->SO_CONG_VAN}}');" data-toggle="modal" data-target="#ChuyenDonVi">Đơn vị</a> | <a href="" onclick="chuyenTiepCaNhan('{{$congVan->SO_CONG_VAN}}');" data-toggle="modal" data-target="#ChuyenCaNhan">Cá nhân</a><br>
       File đính kèm:
       @foreach($dsFile[$congVan->SO_CONG_VAN] as $file)
       <a href='{{url("file/$file->FILE_DINH_KEM")}}' download>{{$file->FILE_DINH_KEM}}</a>
@@ -82,35 +95,81 @@
    })();
 </script>
 <!--Form chuyen tiep-->
-<!--Modal Update -->
+<!--Modal chuyển tiếp -->
 <div id="ChuyenCaNhan" class="modal fade" role="dialog">
    <div class="modal-dialog">
-      <form method="post" action="">
+      <form method="post" action="{{route('quanlyvanban.congvan.chuyentiep.canhan')}}">
+        {{csrf_field()}}
          <!-- Modal content-->
          <div class="modal-content">
             <div class="modal-header">
                <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <h4 class="modal-title">Update user</h4>
+               <h4 class="modal-title">Chuyển tiếp văn bản</h4>
             </div>
             <div class="modal-body">
                
-                  <input type="hidden" class="form-control" id="id_edit" name="id_edit" size="30" />
+                  <input type="hidden" class="form-control" id="SoVanBanc" name="SoVanBan" size="30" />
                   <label>Tên người nhận</label>:
-                  <select class="livesearch" name="GuiChoCaNhan[]" multiple="" >
-                    
-                    <option value="1">Vu Phan</option>
-                    <option value="2">Ton Quan</option>
-                    
+                  <select class="livesearch" name="ChuyenTiepCaNhan[]" multiple="" >
+                    @foreach($dsNhanSu as $nhanSu )
+                    <option value="{{$nhanSu->MA_NHAN_SU}}">{{$nhanSu->HO_VA_TEN}}</option>
+                    @endforeach
                   </select>
-               
             </div>
             <div class="modal-footer">
-               <input type="submit" name="submit" value="Add" class="btn btn-primary">
-               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               <input type="submit" name="submit" value="Chuyển tiếp" class="btn btn-primary">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
          </div>
       </form>
    </div>
 </div>
+<!--Form chuyen tiep cho don vi-->
+<div id="ChuyenDonVi" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <form method="post" action="{{route('quanlyvanban.congvan.chuyentiep.donvi')}}">
+        {{csrf_field()}}
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Chuyển tiếp văn bản</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <input type="hidden" class="form-control" id="SoVanBand" name="SoVanBan" size="30" />
+                  
+                  <label>Các đơn vị nhận</label>:
+                  <select class="livesearch" name="ChuyenTiepDonVi[]" multiple="" >
+                    @foreach($dsDonVi as $donVi)
+                    <option value="{{$donVi->MA_DON_VI}}">{{$donVi->TEN_DON_VI}}</option>
+                    @endforeach
+                  </select>
+                  <br>
+
+                  <select name="LoaiGui" class="form-control">
+                    <option value="1">Trưởng đơn vị</option>
+                    <option value="2">Phó đơn vị</option>
+                    <option value="3">Tất cả thành viên</option>
+                  </select>
+
+                  </div>
+            </div>
+            <div class="modal-footer">
+               <input type="submit" name="submit" value="Chuyển tiếp" class="btn btn-primary">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+<script type="text/javascript">
+  function chuyenTiepCaNhan($id){
+    $('#SoVanBanc').val($id);
+  }
+  function chuyenTiepDonVi($id){
+    $('#SoVanBand').val($id);
+  }
+</script>
 @endsection
 
