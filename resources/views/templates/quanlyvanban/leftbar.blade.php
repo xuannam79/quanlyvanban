@@ -20,6 +20,11 @@
       <a href="{{url('/FormThemNhanSu')}}">Ủy quyền</a>
    </div>
    @endif
+   <button class="dropdown-btn">CÔNG VĂN  </button>
+   <div class="dropdown-container">
+      <a href="#">ĐƠN VỊ</a>
+      <a href="#">NHÂN SỰ</a>
+   </div>
    <button class="dropdown-btn">KẾ HOẠCH  </button>
    <div class="dropdown-container">
       <a href="#">Thời khóa biểu</a>

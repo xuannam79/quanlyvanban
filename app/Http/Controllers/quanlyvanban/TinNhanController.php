@@ -57,4 +57,18 @@ class TinNhanController extends Controller
         }
         return 'success';
     }
+
+    public function getNhanTinNhan(){
+        $getItems = $this->tinNhan->getAll();
+        return view('quanlyvanban.guitinnhan.nhantinnhan',compact('getItems'));
+    }
+
+    public function postNhanTinNhan(){
+        return view('quanlyvanban.guitinnhan.nhantinnhan');
+    }
+
+    public function chiTietTinNhan($maTinNhan){
+        $getTinNhan = $this->tinNhan->docTinNhan($maTinNhan);
+        return view('quanlyvanban.guitinnhan.detail',compact('getTinNhan'));
+    }
 }

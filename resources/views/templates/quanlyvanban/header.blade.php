@@ -18,7 +18,7 @@
    <body>
       <div class="TieuDe">
       <div class="banner">
-         <a href="{{ route('quanlyvanban.congvan.index') }}" title=""><img src="img/BANNER.jpg" alt="Banner" /></a>
+         <a href="{{ route('quanlyvanban.congvan.index') }}" title=""><img src="/img/BANNER.jpg" alt="Banner" /></a>
       <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="8" class="marquee"><i>** Chào mừng các bạn đến với Hệ Thống Tác Nghiệp - Trường Đại học Nội Vụ Hà Nội **</i> </marquee>
       <div class="logout">
          Xin chào, <b> {{Session::get('username')}}</b>

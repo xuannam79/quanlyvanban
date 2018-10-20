@@ -14,7 +14,7 @@ class NhanSu extends Model
     }
     public function layDanhSachNhanSu(){
     	//return Cat::OrderBy('cat_id','desc')->get(); // lấy giảm dần
-   	  return DB::table('nhansu')->distinct()->paginate(3); 
+   	  return DB::table('nhansu')->distinct()->paginate(3);
     }
 
     public function getByMaDonVi($maDonVi){
