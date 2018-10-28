@@ -9,7 +9,7 @@
 </style>
 <script type="text/javascript">
    $(document).ready(function(){
-       $(".livesearch").chosen(); 
+       $(".livesearch").chosen();
    });
 </script>
 <div style="margin: 5%;">

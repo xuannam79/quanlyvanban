@@ -1,5 +1,3 @@
-
-
 @include('templates.quanlyvanban.header')
    <div id="content" class="NoiDung">
       <div id="congvan"> 

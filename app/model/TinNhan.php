@@ -15,7 +15,7 @@ class TinNhan extends Model
     }
 
     public function tinNhanDaGui($maNhanSu){
-    	return DB::table('tinnhan')->select('NOI_DUNG','NGAY_GUI')->join('nhansu','NGUOI_GUI','=','MA_NHAN_SU')->orderByRaw('NGAY_GUI desc')->where('NGUOI_GUI',$maNhanSu)->take(5)->get();
+    	return DB::table('tinnhan')->select('NOI_DUNG','HO_VA_TEN','NGAY_GUI')->join('nhansu','NGUOI_GUI','=','MA_NHAN_SU')->orderByRaw('NGAY_GUI desc')->where('NGUOI_GUI',$maNhanSu)->take(5)->get();
     }
 
     public function guiTinNhan($nguoiGui,$nguoiNhan,$noiDung,$ngayGui,$gioGui){

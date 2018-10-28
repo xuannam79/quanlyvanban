@@ -43,7 +43,7 @@
                @foreach($dsTinNhanDi as $tinNhan)
                <tr>
                   <td>
-                     <i class="fa fa-send"></i><a href='#'> {{$tinNhan->NOI_DUNG}}</a> <span>Người gửi: {{$tinNhan->NGAY_GUI}}</span>
+                     <i class="fa fa-send"></i><a href='#'> {{$tinNhan->NOI_DUNG}}</a> <span>Người gửi: {{$tinNhan->HO_VA_TEN}}</span>
                   </td>
                </tr>
                @endforeach
